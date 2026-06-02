@@ -1,0 +1,177 @@
+
+
+
+
+
+*{
+    margin: 10px;
+    padding: 2px;
+    box-sizing: border-box; 
+
+
+}
+
+.news-bar{
+    display: flex;
+    align-items: center;
+    background: gray;
+    color: darkgreen;
+    padding: 4px 10px;
+    overflow: hidden;
+    font-size: 14px;
+    font-family: 'Times New Roman', Times, serif;
+
+}
+
+.news-title{
+    font-weight: bold;
+    margin-right: 20px;
+    white-space: nowrap;
+
+}
+.news-wraper{
+    overflow: hidden;
+    flex: 1;
+
+}
+.news-content{
+    display: flex;
+    gap: 50px;
+    white-space: nowrap;
+    animation: slideNews 50s linear infinite;
+}
+#news{
+    color: darkgreen;
+    
+}
+
+@keyframes slideNews {
+    from{
+        transform: translateX(100%);
+    }
+    to{
+        transform: translateX(-100%);
+    }
+}
+ul{
+    list-style: disc;
+}
+
+.joint{
+    display: inline-block;
+    padding: 10px  25px;
+    background-color: darkred;
+    color: #fff;
+    text-decoration: dotted;
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: bold;
+    border-radius: 4px;
+    transition: 0.3s ease;
+}
+.joint:hover{
+    background-color: #8b0000;
+}
+
+.slide-text{
+    width: 100%;
+    font-size: 24px;
+    animation: slide 5s infinite  alternate;
+}
+@keyframes slide{
+   from {transform: translateX(-200px);
+    opacity: 0;
+        
+    }
+    to{
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+h1{
+    text-align: center;
+    font-size: 36px;
+    color: black;
+    font-family: 'Times New Roman', Times, serif;
+    background-color: darkcyan;
+    text-shadow: rebeccapurple;
+    border: none;
+}
+
+body{
+    margin: 0;
+    
+}
+
+
+nav{
+    background: #8b0000;
+    padding: 12px;
+    height: 30%px;
+
+
+}
+nav ul{
+
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    list-style: disc;
+    
+}
+nav ul li{
+    margin: 0 15px;
+    
+}
+nav ul li a{
+    color: white ;
+    text-decoration: none;
+    font-size: 15px;
+
+}
+nav ul li :hover{
+   text-decoration: underline;
+}
+.hero{
+    height: calc(100vh - 50px);
+    background: 
+    url("wa18.jpg")  no-repeat center center;
+    background-size: cover;
+    color: white;
+     display : flex;
+     flex-direction:column;
+     justify-content:center;
+     align-items: center;
+     text-align:center;
+}
+
+
+
+.hero p{
+    font-size: 18px;
+    margin-bottom: 20px;
+
+}
+
+.hero h1{
+    font-size: 40Px;
+    margin-bottom: 15px;
+
+}
+footer{text-align: center; 
+    background-color: blueviolet; 
+    color: white;
+
+}
+.footer-icons {
+    display: flex;
+    justify-content: center; 
+    gap: 15px;
+    margin-bottom: 10px; 
+}
+.footer-icons a  {
+    color: white; 
+    font-size: 24px; 
+    transition: color 0.3s; 
+}
+

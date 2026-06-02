@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Matangai Payam - Aber, Nyangkot, Cholochok, and Matangai Boma">
+    <title>Bomas</title>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        /* =========================
+           RESET & VARIABLES
+        ========================= */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        :root {
+            --gold: #d4af37;
+            --gold-light: #f3e5ab;
+            --gold-gradient: linear-gradient(135deg, #b8860b 0%, #d4af37 100%);
+            --bg-dark: #F9F7F2; 
+            --bg-card: #FFFFFF;
+            --text-main: #2C2C2C;
+            --text-muted: #666666;
+            --dark-bg: #1a1a1a;
+            --nav-h: 80px;
+            --border-light: rgba(0, 0, 0, 0.1);
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+             font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            overflow-x: hidden;
+            line-height: 1.7;
+        }
+
+        h1, h2, h3, h4, h5, h6 { font-family: 'Playfair Display', serif; font-weight: 700; color: #222; }
+        a { text-decoration: none; transition: 0.3s; }
+
+        /* =========================
+           LOADER
+        ========================= */
+        #loader {
+            position: fixed; inset: 0; background: var(--bg-dark);
+            display: flex; align-items: center; justify-content: center;
+            flex-direction: column; gap: 20px; z-index: 9999;
+            transition: opacity 0.6s ease;
+        }
+        #loader.hidden { opacity: 0; pointer-events: none; }
+        .loader-emblem {
+            width: 50px; height: 50px; border: 3px solid var(--border-light);
+            border-top-color: var(--gold); border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* =========================
+           HEADER
+        ========================= */
+        header {
+            position: sticky; top: 0; width: 100%; height: var(--nav-h);
+            background: darkred; backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-light); z-index: 1000;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+        }
+        .nav-wrapper {
+            max-width: 1400px; height: 100%; margin: 0 auto;
+            display: flex; align-items: center; justify-content: space-between; padding: 0 40px;
+        }
+        .logo {
+            font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 800;
+            color: white; display: flex; align-items: center; gap: 12px;
+        }
+        .logo-img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 1px solid var(--gold); }
+        
+        nav ul { list-style: none; display: flex; gap: 8px; }
+        nav ul li a {
+            color: white; font-size: 0.85rem; font-weight: 500;
+            text-transform: uppercase; padding: 8px 16px; border-radius: 30px;
+            transition: 0.3s;
+        }
+        nav ul li a:hover, nav ul li a.active {
+            color: var(--gold); background: rgba(212, 175, 55, 0.1);
+        }
+        
+        .hamburger { display: none; background: none; border: none; cursor: pointer; }
+        .hamburger span { display: block; width: 25px; height: 2px; background: var(--text-main); margin: 5px 0; }
+        .mobile-nav {
+            display: none; position: fixed; top: var(--nav-h); left: 0; width: 100%;
+            background: var(--bg-card); padding: 20px; border-bottom: 1px solid var(--border-light);
+            flex-direction: column; gap: 10px; z-index: 999;
+        }
+        .mobile-nav.open { display: flex; }
+        .mobile-nav a { color: var(--text-main); padding: 12px; border-bottom: 1px solid var(--border-light); }
+
+        /* =========================
+           HERO SECTION
+        ========================= */
+        .boma-hero {
+            position: relative;
+            height: 70vh;
+            min-height: 600px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: url('https://picsum.photos/seed/matangai/1920/1080?grayscale&blur=2') no-repeat center center/cover;
+            overflow: hidden;
+        }
+        .boma-hero::before {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.4), var(--bg-dark));
+        }
+        .boma-hero-content { position: relative; z-index: 2; max-width: 900px; padding: 0 20px; }
+        .boma-hero-title {
+            font-size: clamp(3rem, 6vw, 5rem);
+            color: #fff;
+            margin-bottom: 20px;
+            text-shadow: 0 4px 15px rgba(0,0,0,0.6);
+        }
+        .boma-hero-subtitle {
+            font-size: 1.3rem;
+            color: #ddd;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 30px;
+        }
+        
+        .compass-grid {
+            display: inline-flex; gap: 15px; margin-top: 20px; flex-wrap: wrap; justify-content: center;
+        }
+        .compass-item {
+            background: rgba(255,255,255,0.1); backdrop-filter: blur(5px);
+            border: 1px solid rgba(255,255,255,0.2); padding: 10px 20px;
+            border-radius: 50px; color: #fff; font-size: 0.9rem; font-weight: 600;
+        }
+
+        /* =========================
+           INTRO SECTION
+        ========================= */
+        .intro-section {
+            padding: 60px 20px; text-align: center; max-width: 900px; margin: 0 auto;
+        }
+        .intro-text {
+            font-size: 1.1rem; color: var(--text-muted);
+        }
+
+        /* =========================
+           BOMA FEATURE SECTION
+        ========================= */
+        .boma-section {
+            padding: 80px 0;
+            position: relative;
+        }
+        
+        .boma-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .boma-image-wrapper {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+        }
+        
+        .boma-image-wrapper img {
+            width: 100%;
+            height: 450px;
+            object-fit: cover;
+            transition: transform 0.8s ease;
+        }
+        
+        .boma-image-wrapper:hover img { transform: scale(1.05); }
+
+        .boma-badge {
+            position: absolute; top: 20px; left: 20px;
+            background: var(--gold); color: #000;
+            padding: 8px 16px; border-radius: 4px; font-weight: 700; text-transform: uppercase; font-size: 0.8rem;
+        }
+
+        .boma-content h2 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: var(--text-main);
+        }
+        
+        .boma-subtitle {
+            display: block;
+           font-family: 'Poppins', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--gold);
+            margin-bottom: 25px;
+        }
+
+        .boma-content p {
+            color: var(--text-muted);
+            margin-bottom: 25px;
+            font-size: 1.05rem;
+        }
+
+        .location-tag {
+            display: inline-flex; align-items: center; gap: 8px;
+            font-size: 0.9rem; font-weight: 600; color: #555;
+            background: #eee; padding: 6px 12px; border-radius: 6px;
+        }
+
+        /* Alternating Layout */
+        .reverse .boma-image-wrapper { order: 2; }
+        .reverse .boma-content { order: 1; }
+
+        /* =========================
+           ADMIN STATS SECTION
+        ========================= */
+        .admin-section {
+            background: var(--dark-bg); color: #fff; padding: 100px 20px;
+            border-top: 1px solid #333;
+        }
+        .admin-header { text-align: center; margin-bottom: 60px; }
+        .admin-header h2 { color: #fff; margin-bottom: 15px; }
+        .admin-header p { color: #aaa; max-width: 600px; margin: 0 auto; }
+
+        .stats-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px; max-width: 1100px; margin: 0 auto;
+        }
+
+        .stat-card {
+            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+            padding: 40px 30px; border-radius: 12px; text-align: center; transition: 0.3s;
+        }
+        .stat-card:hover { background: rgba(255,255,255,0.1); transform: translateY(-5px); }
+        
+        .stat-icon {
+            font-size: 2.5rem; color: var(--gold); margin-bottom: 20px;
+        }
+        .stat-number { font-size: 2.8rem; font-weight: 700; color: #fff; display: block; margin-bottom: 5px; font-family: 'Playfair Display', serif; }
+        .stat-label { color: #ccc; text-transform: uppercase; letter-spacing: 1px; font-size: 0.9rem; }
+
+        /* =========================
+           FOOTER
+        ========================= */
+        footer {
+            background: #111; color: #ccc; padding: 40px 0; text-align: center; font-size: 0.9rem; border-top: 1px solid #333;
+        }
+        footer a { color: var(--gold); }
+
+        /* ANIMATION CLASSES */
+        .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        /* RESPONSIVE */
+        @media (max-width: 992px) {
+            .boma-row { grid-template-columns: 1fr; gap: 40px; }
+            .reverse .boma-image-wrapper { order: 0; }
+            .reverse .boma-content { order: 1; }
+            nav { display: none; }
+            .hamburger { display: block; }
+            .boma-hero-title { font-size: 2.5rem; }
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <!-- LOADER -->
+    <div id="loader">
+        <div class="loader-emblem"></div>
+    </div>
+
+    <!-- HEADER -->
+    <header>
+        <div class="nav-wrapper">
+            <a href="index.html" class="logo">
+                <img src="logor.jpg" onerror="this.src='https://picsum.photos/seed/logo/100/100'" alt="Logo" class="logo-img">
+                <span>Nyang-Community</span>
+            </a>
+
+            <nav>
+                <ul>
+                    <li><a href="Home.html">Home</a></li>
+                    <li><a href="Home.html#about">About</a></li>
+                    <li><a href="Home.html#Leaderships">Leadership</a></li>
+                    <li><a href="Activities.html">Activities</a></li>
+                    <li><a href="Gallary.html">Gallery</a></li>
+                    <li><a href="#" class="active">Bomas</a></li>
+                    <li><a href="events.html">Events</a></li>
+                    <li><a href="Home.html#contact">Contact</a></li>
+                </ul>
+            </nav>
+
+            <button class="hamburger" id="hamburger">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- MOBILE NAV -->
+    <div class="mobile-nav" id="mobile-nav">
+        <a href="Home.html">Home</a>
+        <a href="Home.html#about">About</a>
+        <a href="Home.html#Leaderships">Leadership</a>
+        <a href="Activities.html">Activities</a>
+        <a href="Gallary.html">Gallery</a>
+        <a href="#" class="active">Bomas</a>
+        <a href="events.html">Events</a>
+        <a href="Home.html#contact">Contact</a>
+    </div>
+
+    <!-- HERO SECTION -->
+    <section class="boma-hero">
+        <div class="boma-hero-content reveal">
+            <span class="boma-hero-subtitle">Administrative Division</span>
+            <h1 class="boma-hero-title">Matangai Payam</h1>
+            <p style="color: rgb(247, 86, 12); font-size: 1.1rem; max-width: 700px; margin: 0 auto;">
+                
+                United under one banner, serving the people through four distinct directions.
+            </p>
+            
+            <div class="compass-grid">
+                <div class="compass-item"><i class="fas fa-compass fa-flip-horizontal"></i> North: Nyangkot</div>
+                <div class="compass-item"><i class="fas fa-compass"></i> South: Cholochok</div>
+                <div class="compass-item"><i class="fas fa-arrow-right"></i> East: Matangai</div>
+                <div class="compass-item"><i class="fas fa-arrow-left"></i> West: Aber</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- INTRO -->
+    <section class="intro-section reveal">
+        <p class="intro-text">
+            Matangai Payam stands as the central pillar of the Nyang Community administration. It is comprised of four strategic Bomas positioned in the four cardinal directions, ensuring comprehensive governance and representation for every citizen.
+        </p>
+    </section>
+
+    <!-- MAIN CONTENT -->
+    
+    <!-- BOMA 1: ABER (WEST) -->
+    <section class="boma-section">
+        <div class="boma-row reveal">
+            <div class="boma-image-wrapper">
+                <div class="boma-badge">West</div>
+                <img src="bo6.jpg" alt="Aber Boma">
+            </div>
+            <div class="boma-content">
+                <span class="boma-subtitle">01 / The Western Gate</span>
+                <h2>Aber Boma</h2>
+                <div class="location-tag"><i class="fas fa-map-marker-alt"></i> Located to the West</div>
+                <br>
+                <p>
+                    Situated to the West of Matangai Payam, Aber serves as a vital entry point and agricultural hub. The lands here are fertile, supporting the community's agrarian economy.
+                </p>
+                <p>
+                    Under the guidance of its Executive Chief, Aber maintains peace and order, acting as a buffer and a trading post for the western regions.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- BOMA 2: NYANGKOT (NORTH) -->
+    <section class="boma-section" style="background-color: #fff;">
+        <div class="boma-row reverse reveal">
+            <div class="boma-image-wrapper">
+                <div class="boma-badge">North</div>
+                <img src="bo3.jpg" alt="Nyangkot Boma">
+            </div>
+            <div class="boma-content">
+                <span class="boma-subtitle">02 / The Northern Reach</span>
+                <h2>Nyangkot Boma</h2>
+                <div class="location-tag"><i class="fas fa-map-marker-alt"></i> Located to the North</div>
+                <br>
+                <p>
+                    To the North lies Nyangkot, a region rich in cultural history and tradition. It connects Matangai Payam to the northern territories and is known for its vibrant community gatherings.
+                </p>
+                <p>
+                    Nyangkot plays a critical role in preserving the cultural heritage of the Nyang people, ensuring that the customs of the north are passed down to future generations.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- BOMA 3: CHOLOCHOK (SOUTH) -->
+    <section class="boma-section">
+        <div class="boma-row reveal">
+            <div class="boma-image-wrapper">
+                <div class="boma-badge">South</div>
+                <img src="bo5.jpg" alt="Cholochok Boma">
+            </div>
+            <div class="boma-content">
+                <span class="boma-subtitle">03 / The Southern Border</span>
+                <h2>Cholochok Boma</h2>
+                <div class="location-tag"><i class="fas fa-map-marker-alt"></i> Located to the South</div>
+                <br>
+                <p>
+                    Located to the South, Cholochok acts as the guardian of the Payam's southern borders. It is a region of resilience, where the community works together to secure the grazing lands and water resources.
+                </p>
+                <p>
+                    The leadership in Cholochok is focused on conflict resolution and maintaining strong relationships with neighboring communities to the south.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- BOMA 4: MATANGAI (EAST) -->
+    <section class="boma-section" style="background-color: #fff;">
+        <div class="boma-row reverse reveal">
+            <div class="boma-image-wrapper">
+                <div class="boma-badge">East</div>
+                <img src="girl2.jpg" alt="Matangai Boma">
+            </div>
+            <div class="boma-content">
+                <span class="boma-subtitle">04 / The Eastern Rise</span>
+                <h2>Matangai Boma</h2>
+                <div class="location-tag"><i class="fas fa-map-marker-alt"></i> Located to the East</div>
+                <br>
+                <p>
+                    To the East lies the namesake Boma, Matangai. As the central administrative heart of the Payam, it hosts the majority of the Payam's official offices and the Regional Courts.
+                </p>
+                <p>
+                    Matangai Boma is the beacon of development, often spearheading new educational initiatives and infrastructure projects for the entire Payam.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ADMINISTRATIVE STRUCTURE SECTION -->
+    <section class="admin-section reveal">
+        <div class="admin-header">
+            <h2>Payam Administration</h2>
+            <p>Matangai Payam is governed by a structured leadership system designed to serve justice and maintain order efficiently.</p>
+        </div>
+
+        <div class="stats-grid">
+            <!-- Stat 1 -->
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-balance-scale"></i></div>
+                <span class="stat-number">2</span>
+                <span class="stat-label">Regional Courts</span>
+                <p style="font-size: 0.85rem; color: #888; margin-top: 10px;">Ensuring justice and legal compliance across the Payam.</p>
+            </div>
+
+            <!-- Stat 2 -->
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-user-tie"></i></div>
+                <span class="stat-number">4</span>
+                <span class="stat-label">Executive Chiefs</span>
+                <p style="font-size: 0.85rem; color: #888; margin-top: 10px;">Leading the four Bomas: Aber, Nyangkot, Cholochok, and Matangai.</p>
+            </div>
+
+            <!-- Stat 3 -->
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-users"></i></div>
+                <span class="stat-number">8</span>
+                <span class="stat-label">Sub-Chiefs</span>
+                <p style="font-size: 0.85rem; color: #888; margin-top: 10px;">Assisting leadership at the village and clan levels.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Nyang Community. Preserving Our Heritage.</p>
+            <p style="margin-top: 10px; font-size: 0.8rem; color: #666;">
+                <a href="index.html">Back to Home</a> | <a href="#">Privacy Policy</a>
+            </p>
+        </div>
+    </footer>
+
+    <!-- SCRIPTS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Loader
+        window.addEventListener('load', () => {
+            document.getElementById('loader').classList.add('hidden');
+        });
+
+        // Mobile Menu
+        const hamburger = document.getElementById('hamburger');
+        const mobileNav = document.getElementById('mobile-nav');
+        
+        hamburger.addEventListener('click', () => {
+            mobileNav.classList.toggle('open');
+        });
+
+        // Scroll Reveal Animation
+        const revealElements = document.querySelectorAll('.reveal');
+        
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.15 });
+
+        revealElements.forEach(el => revealObserver.observe(el));
+    </script>
+</body>
+</html>

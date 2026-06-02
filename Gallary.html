@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="author" content="Samuel Maker Adoor">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="NYang-Community Gallery">
+
+    <title>Gallery</title>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+
+        /* =========================
+           RESET & VARIABLES
+        ========================= */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            /* Palette (Matching Home Page) */
+            --gold: #d4af37;
+            --gold-light: #f3e5ab;
+            --gold-gradient: linear-gradient(135deg, #b8860b 0%, #d4af37 100%);
+            
+            /* CREAM THEME */
+            --bg-dark: #F9F7F2; 
+            --bg-card: #FFFFFF;
+            --bg-glass: rgba(255, 255, 255, 0.85);
+            
+            --text-main: #2C2C2C;
+            --text-muted: #666666;
+
+            --dark-bg: #1a1a1a;
+            --dark-text: #e0e0e0;
+
+            --red-accent: #800000;
+            --nav-h: 80px;
+            --border-light: rgba(0, 0, 0, 0.1);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-dark);
+            color: rgb(102, 97, 97);
+            overflow-x: hidden;
+            line-height: 1.7;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            color: #222;
+        }
+
+        /* =========================
+           HEADER (Matches Home Page)
+        ========================= */
+        header {
+            position: sticky;
+            top: 0;
+            width: 100%;
+            height: var(--nav-h);
+            background:darkred;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-light);
+            z-index: 1000;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+        }
+
+        .nav-wrapper {
+            max-width: 1400px;
+            height: 100%;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 40px;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: white;
+            text-decoration: none;
+            letter-spacing: -0.02em;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-img {
+            width: 45px;
+            height: 45px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 1px solid var(--gold);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 8px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            padding: 8px 16px;
+            border-radius: 30px;
+            transition: 0.3s;
+        }
+
+        nav ul li a:hover, nav ul li a.active {
+            color: var(--gold);
+            background: rgba(212, 175, 55, 0.1);
+        }
+
+        /* Hamburger for Mobile */
+        .hamburger {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .hamburger span {
+            display: block;
+            width: 25px;
+            height: 2px;
+            background: var(--text-main);
+            margin: 5px 0;
+            transition: 0.3s;
+        }
+
+        .hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+        .hamburger.open span:nth-child(2) { opacity: 0; }
+        .hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+        /* Mobile Nav */
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            top: var(--nav-h);
+            left: 0; width: 100%;
+            background: var(--bg-card);
+            padding: 20px;
+            border-bottom: 1px solid var(--border-light);
+            flex-direction: column;
+            gap: 10px;
+            z-index: 999;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+        }
+        .mobile-nav.open { display: flex; animation: fadeIn 0.3s ease; }
+        .mobile-nav a {
+            color: var(--text-main);
+            text-decoration: none;
+            padding: 12px;
+            border-bottom: 1px solid var(--border-light);
+            font-size: 1rem;
+        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* =========================
+           PAGE HERO
+        ========================= */
+        .page-hero {
+            text-align: center;
+            padding: 120px 20px 60px;
+            background: linear-gradient(to bottom, var(--bg-dark), #fff);
+        }
+
+        .page-hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            margin-bottom: 15px;
+            color: var(--text-main);
+        }
+
+        .page-hero span {
+            color: var(--gold);
+        }
+
+        .page-hero p {
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* =========================
+           GALLERY GRID
+        ========================= */
+        .gallery-wrapper {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px 100px;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-label {
+            color: var(--gold);
+            font-size: 0.85rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+        
+        .section-title span {
+            border-bottom: 3px solid var(--gold);
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 24px;
+        }
+
+        .gallery-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: 16px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.03);
+            transition: all 0.4s ease;
+            cursor: pointer;
+            height: 350px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .gallery-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            border-color: var(--gold);
+        }
+
+        .img-wrapper {
+            width: 100%;
+            height: 100%; 
+            overflow: hidden;
+            position: relative;
+            background: #f0f0f0;
+            flex-grow: 1;
+        }
+
+        .img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain; 
+            transition: transform 0.6s ease;
+            display: block;
+        }
+        
+        .gallery-card:hover .img-wrapper img {
+            transform: scale(1.05);
+        }
+
+        /* Overlay inside Card */
+        .card-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.85), transparent 60%);
+            opacity: 0;
+            transition: 0.3s ease;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            padding: 20px;
+            flex-grow: 1;
+        }
+
+        .gallery-card:hover .card-overlay {
+            opacity: 1;
+        }
+
+        .card-caption {
+            color: #fff;
+            font-size: 1rem;
+            font-family: 'Playfair Display', serif;
+            text-align: center;
+            width: 100%;
+            line-height: 1.4;
+            transform: translateY(10px);
+            transition: 0.3s;
+        }
+        
+        .gallery-card:hover .card-caption {
+            transform: translateY(0);
+        }
+
+        /* =========================
+           LIGHTBOX
+        ========================= */
+        .lightbox {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 9999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            backdrop-filter: blur(5px);
+        }
+
+        .lightbox img {
+            max-width: 95%;
+            max-height: 90vh;
+            border-radius: 4px;
+            border: 2px solid var(--gold);
+            box-shadow: 0 0 50px rgba(0,0,0,0.5);
+            object-fit: contain;
+        }
+
+        #close-btn {
+            position: absolute;
+            top: 30px;
+            right: 40px;
+            font-size: 3rem;
+            color: #fff;
+            cursor: pointer;
+            transition: 0.3s;
+            z-index: 10000;
+        }
+
+        #close-btn:hover {
+            color: var(--gold);
+            transform: scale(1.1);
+        }
+
+        /* ANIMATIONS */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s ease;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            nav { display: none; }
+            .hamburger { display: flex; flex-direction: column; justify-content: space-around; height: 24px;}
+            .gallery-grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
+            .page-hero { padding: 80px 20px 40px; }
+            .gallery-card { height: 300px; }
+            #close-btn { top: 20px; right: 20px; }
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header id="header">
+        <div class="nav-wrapper">
+            <a href="home.html" class="logo">
+                <img src="logor.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/logo/100/100'" alt="Logo" class="logo-img">
+                <span>Nyang-Community</span>
+            </a>
+
+            <nav>
+                <ul>
+                    <li><a href="home.html">Home</a></li>
+                     <li><a href="Home.html#contact">Contact</a></li>
+                    <li><a href="Activities.html">Activities</a></li>
+                    <!-- Corrected spelling for consistency, though kept Gallary if user file is named that -->
+                    <li><a href="Gallary.html" class="active">Gallery</a></li>
+                    <li><a href="Bomas.html">Bomas</a></li>
+                    <li><a href="events.html">Event</a></li>
+                   
+                </ul>
+            </nav>
+
+            <button class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- MOBILE NAV -->
+    <div class="mobile-nav" id="mobile-nav">
+        <a href="home.html">Home</a>
+       <a href="Home.html#contact">Contacts</a>
+        <a href="Activities.html">Activities</a>
+        <a href="Gallary.html" class="active">Gallery</a>
+        <a href="Bomas.html">Bomas</a>
+        <a href="events.html">Events</a>
+        <a href="dashboard.html">Dashboard</a>
+    </div>
+
+    <!-- PAGE HERO -->
+    <section class="page-hero">
+        <h1 class="reveal">Our <span>Gallery</span></h1>
+        <p class="reveal">Capturing moments of unity, culture, heritage, and progress.</p>
+    </section>
+
+    <!-- SECTION 1: COMMUNITY PORTRAITS -->
+    <section class="gallery-wrapper">
+        <div class="section-header reveal">
+            <span class="section-label">Heritage & Portraits</span>
+            <h2 class="section-title"><span>The People</span></h2>
+            <p class="text-center" style="color: var(--text-muted); margin-bottom: 40px;">The faces of our resilience.</p>
+        </div>
+
+        <div class="gallery-grid">
+            <!-- Portraits (Vertical Images) -->
+            <div class="gallery-card reveal">
+                <div class="img-wrapper">
+                    <img src="ani1.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/ani1/600/800'" alt="Community Emblem">
+                    <div class="card-overlay"><div class="card-caption">Community Emblem</div></div>
+                </div>
+            </div>
+
+            <div class="gallery-card reveal">
+                <div class="img-wrapper">
+                    <img src="bull1.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/bull1/600/800'" alt="Traditional Culture">
+                    <div class="card-overlay"><div class="card-caption">Traditional Culture</div></div>
+                </div>
+            </div>
+
+            <div class="gallery-card reveal">
+                <div class="img-wrapper">
+                    <img src="gir1.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/gir1/600/800'" alt="Girls Identity">
+                    <div class="card-overlay"><div class="card-caption">Girls Showing Cultural Identity</div></div>
+                </div>
+            </div>
+
+            <div class="gallery-card reveal">
+                <div class="img-wrapper">
+                    <img src="girl2.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/girl2/600/800'" alt="Community Event">
+                    <div class="card-overlay"><div class="card-caption">Community Event</div></div>
+                </div>
+            </div>
+
+            <div class="gallery-card reveal">
+                <div class="img-wrapper">
+                    <img src="mako3.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/mako3/600/800'" alt="Community Event">
+                    <div class="card-overlay"><div class="card-caption">Community Event</div></div>
+                </div>
+            </div>
+
+            <div class="gallery-card reveal">
+                <div class="img-wrapper">
+                    <img src="kar.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/kar/600/800'" alt="Community Event">
+                    <div class="card-overlay"><div class="card-caption">Community Event</div></div>
+                </div>
+            </div>
+
+            <div class="gallery-card reveal">
+                <div class="img-wrapper">
+                    <img src="dm2.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/dm2/600/800'" alt="Community Event">
+                    <div class="card-overlay"><div class="card-caption">Community Event</div></div>
+                </div>
+            </div>
+
+            <div class="gallery-card reveal">
+                <div class="img-wrapper">
+                    <img src="girl3.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/girl3/600/800'" alt="Engineer Kuch">
+                    <div class="card-overlay"><div class="card-caption">Eng. Kuch Akuocbai</div></div>
+                </div>
+            </div>
+
+            <div class="gallery-card reveal">
+                <div class="img-wrapper">
+                    <img src="mako1.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/mako1/600/800'" alt="Sultan Makol">
+                    <div class="card-overlay"><div class="card-caption">Sultan Makol Malual Kodi</div></div>
+                </div>
+            </div>
+
+            <div class="gallery-card reveal">
+                <div class="img-wrapper">
+                    <img src="kodi3.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/kodi3/600/800'" alt="Great Sultan">
+                    <div class="card-overlay"><div class="card-caption">The Great Sultan Malual Kodi</div></div>
+                </div>
+            </div>
+
+            <div class="gallery-card reveal">
+                <div class="img-wrapper">
+                    <img src="ako.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/ako/600/800'" alt="Leadership">
+                    <div class="card-overlay"><div class="card-caption">Leadership</div></div>
+                </div>
+            </div>
+
+            <div class="gallery-card reveal">
+                <div class="img-wrapper">
+                    <img src="mee1.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/mee1/600/800'" alt="Community Meeting">
+                    <div class="card-overlay"><div class="card-caption">Community Meeting</div></div>
+                </div>
+            </div>
+
+            <div class="gallery-card reveal">
+                <div class="img-wrapper">
+                    <img src="cow.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/cow/600/800'" alt="Cattle Heritage">
+                    <div class="card-overlay"><div class="card-caption">Cattle Heritage</div></div>
+                </div>
+            </div>
+
+            <div class="gallery-card reveal">
+                <div class="img-wrapper">
+                    <img src="dm1.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/dm1/600/800'" alt="Community Event">
+                    <div class="card-overlay"><div class="card-caption">Community Event</div></div>
+                </div>
+            </div>
+
+            <div class="gallery-card reveal">
+                <div class="img-wrapper">
+                    <img src="luak1.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/luak1/600/800'" alt="Luak Ajok">
+                    <div class="card-overlay"><div class="card-caption">Luak Ajok</div></div>
+                </div>
+            </div>
+
+            <div class="gallery-card reveal">
+                <div class="img-wrapper">
+                    <img src="jaco.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/jaco/600/800'" alt="Jacob Matoch Wade">
+                    <div class="card-overlay"><div class="card-caption">Jacob Matoch Wade<br><small>Chairperson MYA Juba Branch</small></div></div>
+                </div>
+            </div>
+
+            <div class="gallery-card reveal">
+                <div class="img-wrapper">
+                    <img src="manon1.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/manon1/600/800'" alt="Rev Emmanuel">
+                    <div class="card-overlay"><div class="card-caption">Ustaz Rev Emmanuel Mading Manon</div></div>
+                </div>
+            </div>
+
+            <div class="gallery-card reveal">
+                <div class="img-wrapper">
+                    <img src="mtuen1.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/mtuen1/600/800'" alt="Peter Mading">
+                    <div class="card-overlay"><div class="card-caption">Ustaz Peter Mading Matueny</div></div>
+                </div>
+            </div>
+
+            <div class="gallery-card reveal">
+                <div class="img-wrapper">
+                    <img src="cows1.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/cows1/600/800'" alt="Cows Grazing">
+                    <div class="card-overlay"><div class="card-caption">Cows Grazing</div></div>
+                </div>
+            </div>
+
+            <div class="gallery-card reveal">
+                <div class="img-wrapper">
+                    <img src="Dhu.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/dhu/600/800'" alt="Dhukpou Maker">
+                    <div class="card-overlay"><div class="card-caption">Dhukpou Maker</div></div>
+                </div>
+            </div>
+
+            <div class="gallery-card reveal">
+                <div class="img-wrapper">
+                    <img src="meet2.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/meet2/600/800'" alt="Community Gathering">
+                    <div class="card-overlay"><div class="card-caption">Community Gathering</div></div>
+                </div>
+            </div>
+
+            <div class="gallery-card reveal">
+                <div class="img-wrapper">
+                    <img src="mee5.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/mee5/600/800'" alt="Cultural Identity">
+                    <div class="card-overlay"><div class="card-caption">Cultural Identity</div></div>
+                </div>
+            </div>
+
+            <div class="gallery-card reveal">
+                <div class="img-wrapper">
+                    <img src="mee6.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/mee6/600/800'" alt="Education Program">
+                    <div class="card-overlay"><div class="card-caption">Education Program</div></div>
+                </div>
+            </div>
+
+            <div class="gallery-card reveal">
+                <div class="img-wrapper">
+                    <img src="da4.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/da4/600/800'" alt="Community Celebration">
+                    <div class="card-overlay"><div class="card-caption">Community Celebration</div></div>
+                </div>
+                <!--more imges begi-->
+                    <div class="img-wrapper">
+                    <img src="g1.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/ani1/600/800'" alt="Community Emblem">
+                    <div class="card-overlay"><div class="card-caption">Community Emblem</div></div>
+                </div>
+            </div>
+
+            <div class="gallery-card reveal">
+                <div class="img-wrapper">
+                    <img src="g2.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/bull1/600/800'" alt="Traditional Culture">
+                    <div class="card-overlay"><div class="card-caption">Traditional Culture</div></div>
+                </div>
+            </div>
+
+            <div class="gallery-card reveal">
+                <div class="img-wrapper">
+                    <img src="g3.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/gir1/600/800'" alt="Girls Identity">
+                    <div class="card-overlay"><div class="card-caption">Girls Showing Cultural Identity</div></div>
+                </div>
+            </div>
+
+            <div class="gallery-card reveal">
+                <div class="img-wrapper">
+                    <img src="g4.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/girl2/600/800'" alt="Community Event">
+                    <div class="card-overlay"><div class="card-caption">Community Event</div></div>
+                </div>
+            </div>
+
+            <div class="gallery-card reveal">
+                <div class="img-wrapper">
+                    <img src="g5.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/g5/600/800'" alt="Community Event">
+                    <div class="card-overlay"><div class="card-caption">Community Event</div></div>
+                </div>
+            </div>
+
+            <div class="gallery-card reveal">
+                <div class="img-wrapper">
+                    <img src="g6.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/g6/600/800'" alt="Community Event">
+                    <div class="card-overlay"><div class="card-caption">Community Event</div></div>
+                </div>
+            </div>
+
+            <div class="gallery-card reveal">
+                <div class="img-wrapper">
+                    <img src="g7.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/dm2/600/800'" alt="Community Event">
+                    <div class="card-overlay"><div class="card-caption">Community Event</div></div>
+                </div>
+            </div>
+
+            <div class="gallery-card reveal">
+                <div class="img-wrapper">
+                    <img src="g8.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/girl3/600/800'" alt="Engineer Kuch">
+                    <div class="card-overlay"><div class="card-caption">Eng. Kuch Akuocbai</div></div>
+                </div>
+            </div>
+
+            <div class="gallery-card reveal">
+                <div class="img-wrapper">
+                    <img src="g9.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/mako1/600/800'" alt="Sultan Makol">
+                    <div class="card-overlay"><div class="card-caption">Sultan Makol Malual Kodi</div></div>
+                </div>
+            </div>
+
+            <div class="gallery-card reveal">
+                <div class="img-wrapper">
+                    <img src="g10.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/kodi3/600/800'" alt="Great Sultan">
+                    <div class="card-overlay"><div class="card-caption">The Great Sultan Malual Kodi</div></div>
+                </div>
+            </div>
+
+            <div class="gallery-card reveal">
+                <div class="img-wrapper">
+                    <img src="g11.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/ako/600/800'" alt="Leadership">
+                    <div class="card-overlay"><div class="card-caption">Leadership</div></div>
+                </div>
+            </div>
+
+            <div class="gallery-card reveal">
+                <div class="img-wrapper">
+                    <img src="g12.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/mee1/600/800'" alt="Community Meeting">
+                    <div class="card-overlay"><div class="card-caption">Community Meeting</div></div>
+                </div>
+            </div>
+
+            <div class="gallery-card reveal">
+                <div class="img-wrapper">
+                    <img src="g13.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/cow/600/800'" alt="Cattle Heritage">
+                    <div class="card-overlay"><div class="card-caption">Cattle Heritage</div></div>
+                </div>
+            </div>
+
+            <div class="gallery-card reveal">
+                <div class="img-wrapper">
+                    <img src="g14.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/dm1/600/800'" alt="Community Event">
+                    <div class="card-overlay"><div class="card-caption">Community Event</div></div>
+                </div>
+            </div>
+
+            <div class="gallery-card reveal">
+                <div class="img-wrapper">
+                    <img src="g16.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/luak1/600/800'" alt="Luak Ajok">
+                    <div class="card-overlay"><div class="card-caption">Luak Ajok</div></div>
+                </div>
+            </div>
+
+            <div class="gallery-card reveal">
+                <div class="img-wrapper">
+                    <img src="g17.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/jaco/600/800'" alt="Jacob Matoch Wade">
+                    <div class="card-overlay"><div class="card-caption">Jacob Matoch Wade<br><small>Chairperson MYA Juba Branch</small></div></div>
+                </div>
+            </div>
+
+            <div class="gallery-card reveal">
+                <div class="img-wrapper">
+                    <img src="g18.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/manon1/600/800'" alt="Rev Emmanuel">
+                    <div class="card-overlay"><div class="card-caption">Ustaz Rev Emmanuel Mading Manon</div></div>
+                </div>
+            </div>
+
+            <div class="gallery-card reveal">
+                <div class="img-wrapper">
+                    <img src="g19.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/mtuen1/600/800'" alt="Peter Mading">
+                    <div class="card-overlay"><div class="card-caption">Ustaz Peter Mading Matueny</div></div>
+                </div>
+            </div>
+
+            <div class="gallery-card reveal">
+                <div class="img-wrapper">
+                    <img src="g20.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/cows1/600/800'" alt="Cows Grazing">
+                    <div class="card-overlay"><div class="card-caption">Cows Grazing</div></div>
+                </div>
+            </div>
+
+            <div class="gallery-card reveal">
+                <div class="img-wrapper">
+                    <img src="g21.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/dhu/600/800'" alt="Dhukpou Maker">
+                    <div class="card-overlay"><div class="card-caption">Dhukpou Maker</div></div>
+                </div>
+            </div>
+
+            <div class="gallery-card reveal">
+                <div class="img-wrapper">
+                    <img src="g22.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/meet2/600/800'" alt="Community Gathering">
+                    <div class="card-overlay"><div class="card-caption">Community Gathering</div></div>
+                </div>
+            </div>
+
+            <div class="gallery-card reveal">
+                <div class="img-wrapper">
+                    <img src="g23.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/mee5/600/800'" alt="Cultural Identity">
+                    <div class="card-overlay"><div class="card-caption">Cultural Identity</div></div>
+                </div>
+            </div>
+
+            <div class="gallery-card reveal">
+                <div class="img-wrapper">
+                    <img src="mee6.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/mee6/600/800'" alt="Education Program">
+                    <div class="card-overlay"><div class="card-caption">Education Program</div></div>
+                </div>
+            </div>
+
+            <div class="gallery-card reveal">
+                <div class="img-wrapper">
+                    <img src="g24.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/da4/600/800'" alt="Community Celebration">
+                    <div class="card-overlay"><div class="card-caption">Community Celebration</div></div>
+                </div>
+
+
+                <!--more imges end-->
+
+                <!-- Add more cards as needed -->
+
+                <div class="img-wrapper">
+                    <img src="den1.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/ani1/600/800'" alt="Community Emblem">
+                    <div class="card-overlay"><div class="card-caption">Community Emblem</div></div>
+                </div>
+            </div>
+
+            <div class="gallery-card reveal">
+                <div class="img-wrapper">
+                    <img src="den2.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/bull1/600/800'" alt="Traditional Culture">
+                    <div class="card-overlay"><div class="card-caption">Traditional Culture</div></div>
+                </div>
+            </div>
+
+            <div class="gallery-card reveal">
+                <div class="img-wrapper">
+                    <img src="den3.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/gir1/600/800'" alt="Girls Identity">
+                    <div class="card-overlay"><div class="card-caption">Girls Showing Cultural Identity</div></div>
+                </div>
+            </div>
+
+            <div class="gallery-card reveal">
+                <div class="img-wrapper">
+                    <img src="den4.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/girl2/600/800'" alt="Community Event">
+                    <div class="card-overlay"><div class="card-caption">Community Event</div></div>
+                </div>
+            </div>
+
+            <div class="gallery-card reveal">
+                <div class="img-wrapper">
+                    <img src="den5.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/mako3/600/800'" alt="Community Event">
+                    <div class="card-overlay"><div class="card-caption">Community Event</div></div>
+                </div>
+            </div>
+
+            <div class="gallery-card reveal">
+                <div class="img-wrapper">
+                    <img src="den6.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/kar/600/800'" alt="Community Event">
+                    <div class="card-overlay"><div class="card-caption">Community Event</div></div>
+                </div>
+            </div>
+
+            <div class="gallery-card reveal">
+                <div class="img-wrapper">
+                    <img src="den7.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/dm2/600/800'" alt="Community Event">
+                    <div class="card-overlay"><div class="card-caption">Community Event</div></div>
+                </div>
+            </div>
+
+            <div class="gallery-card reveal">
+                <div class="img-wrapper">
+                    <img src="den8.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/girl3/600/800'" alt="Engineer Kuch">
+                    <div class="card-overlay"><div class="card-caption">Eng. Kuch Akuocbai</div></div>
+                </div>
+            </div>
+
+            <div class="gallery-card reveal">
+                <div class="img-wrapper">
+                    <img src="den9.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/mako1/600/800'" alt="Sultan Makol">
+                    <div class="card-overlay"><div class="card-caption">Sultan Makol Malual Kodi</div></div>
+                </div>
+            </div>
+
+            <div class="gallery-card reveal">
+                <div class="img-wrapper">
+                    <img src="den10.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/kodi3/600/800'" alt="Great Sultan">
+                    <div class="card-overlay"><div class="card-caption">The Great Sultan Malual Kodi</div></div>
+                </div>
+            </div>
+
+            <div class="gallery-card reveal">
+                <div class="img-wrapper">
+                    <img src="den11.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/ako/600/800'" alt="Leadership">
+                    <div class="card-overlay"><div class="card-caption">Leadership</div></div>
+                </div>
+            </div>
+
+            <div class="gallery-card reveal">
+                <div class="img-wrapper">
+                    <img src="den12.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/mee1/600/800'" alt="Community Meeting">
+                    <div class="card-overlay"><div class="card-caption">Community Meeting</div></div>
+                </div>
+            </div>
+
+            <div class="gallery-card reveal">
+                <div class="img-wrapper">
+                    <img src="den13.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/cow/600/800'" alt="Cattle Heritage">
+                    <div class="card-overlay"><div class="card-caption">Cattle Heritage</div></div>
+                </div>
+            </div>
+
+            <div class="gallery-card reveal">
+                <div class="img-wrapper">
+                    <img src="den14.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/dm1/600/800'" alt="Community Event">
+                    <div class="card-overlay"><div class="card-caption">Community Event</div></div>
+                </div>
+            </div>
+
+            <div class="gallery-card reveal">
+                <div class="img-wrapper">
+                    <img src="den15.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/luak1/600/800'" alt="Luak Ajok">
+                    <div class="card-overlay"><div class="card-caption">Luak Ajok</div></div>
+                </div>
+            </div>
+
+            <div class="gallery-card reveal">
+                <div class="img-wrapper">
+                    <img src="den16.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/jaco/600/800'" alt="Jacob Matoch Wade">
+                    <div class="card-overlay"><div class="card-caption">Jacob Matoch Wade<br><small>Chairperson MYA Juba Branch</small></div></div>
+                </div>
+            </div>
+
+            <div class="gallery-card reveal">
+                <div class="img-wrapper">
+                    <img src="bo1.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/manon1/600/800'" alt="Rev Emmanuel">
+                    <div class="card-overlay"><div class="card-caption">Ustaz Rev Emmanuel Mading Manon</div></div>
+                </div>
+            </div>
+
+            <div class="gallery-card reveal">
+                <div class="img-wrapper">
+                    <img src="bo2.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/mtuen1/600/800'" alt="Peter Mading">
+                    <div class="card-overlay"><div class="card-caption">Ustaz Peter Mading Matueny</div></div>
+                </div>
+            </div>
+
+            <div class="gallery-card reveal">
+                <div class="img-wrapper">
+                    <img src="bo3.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/cows1/600/800'" alt="Cows Grazing">
+                    <div class="card-overlay"><div class="card-caption">Cows Grazing</div></div>
+                </div>
+            </div>
+
+            <div class="gallery-card reveal">
+                <div class="img-wrapper">
+                    <img src="bo4.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/dhu/600/800'" alt="Dhukpou Maker">
+                    <div class="card-overlay"><div class="card-caption">Dhukpou Maker</div></div>
+                </div>
+            </div>
+
+            <div class="gallery-card reveal">
+                <div class="img-wrapper">
+                    <img src="bo5.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/meet2/600/800'" alt="Community Gathering">
+                    <div class="card-overlay"><div class="card-caption">Community Gathering</div></div>
+                </div>
+            </div>
+
+            <div class="gallery-card reveal">
+                <div class="img-wrapper">
+                    <img src="bo6.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/mee5/600/800'" alt="Cultural Identity">
+                    <div class="card-overlay"><div class="card-caption">Cultural Identity</div></div>
+                </div>
+            </div>
+
+            <div class="gallery-card reveal">
+                <div class="img-wrapper">
+                    <img src="bo7.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/mee6/600/800'" alt="Education Program">
+                    <div class="card-overlay"><div class="card-caption">Education Program</div></div>
+                </div>
+            </div>
+
+            <div class="gallery-card reveal">
+                <div class="img-wrapper">
+                    <img src="bo8.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/da4/600/800'" alt="Community Celebration">
+                    <div class="card-overlay"><div class="card-caption">Community Celebration</div></div>
+                </div>
+
+                <!-- end -->
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 2: HERITAGE & EVENTS (Regenerated Content) -->
+    <section id="heritage" style="background-color: #fff;">
+        <div class="gallery-wrapper">
+            <div class="section-header reveal">
+                <span class="section-label">Our Heritage</span>
+                <h2 class="section-title"><span>Events & Heritage</span></h2>
+                <p class="text-center" style="color: var(--text-muted); margin-bottom: 40px;">The landscapes and events that define our journey.</p>
+            </div>
+
+            <div class="gallery-grid">
+                <!-- New Generated Cards -->
+                <div class="gallery-card reveal">
+                    <div class="img-wrapper">
+                        <img src="cows1.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/heritage1/800/600'" alt="Sunset over the village">
+                        <div class="card-overlay"><div class="card-caption">Sunset over the village</div></div>
+                    </div>
+
+                    <div class="img-wrapper">
+                        <img src="cows3.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/heritage1/800/600'" alt="Sunset over the village">
+                        <div class="card-overlay"><div class="card-caption">Sunset over the village</div></div>
+                    </div>
+                </div>
+
+                <div class="gallery-card reveal">
+                    <div class="img-wrapper">
+                        <img src="da.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/event1/600/800'" alt="Traditional Dance">
+                        <div class="card-overlay"><div class="card-caption">Traditional Dance</div></div>
+                    </div>
+                </div>
+
+                <div class="gallery-card reveal">
+                    <div class="img-wrapper">
+                        <img src="bo4.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/land1/800/600'" alt="The Great River">
+                        <div class="card-overlay"><div class="card-caption">The Great River</div></div>
+                    </div>
+                </div>
+
+                <div class="gallery-card reveal">
+                    <div class="img-wrapper">
+                        <img src="bo5.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/meet3/600/800'" alt="Elders Council">
+                        <div class="card-overlay"><div class="card-caption"></div></div>
+                    </div>
+                </div>
+
+                <div class="gallery-card reveal">
+                    <div class="img-wrapper">
+                        <img src="bull1.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/youth1/800/600'" alt="Youth Sports Day">
+                        <div class="card-overlay"><div class="card-caption"></div></div>
+                    </div>
+                </div>
+
+                
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- LIGHTBOX -->
+    <div class="lightbox" id="lightbox">
+        <span id="close-btn">&times;</span>
+        <img src="" id="lightbox-img" alt="Preview">
+    </div>
+
+    <!-- FOOTER -->
+    <footer style="background: #1a1a1a; padding: 60px 20px; text-align: center; border-top: 1px solid #333;">
+        <h3 style="color: #fff; font-family: 'Playfair Display'; margin-bottom: 20px;">Nyang-Community</h3>
+        <p style="color: #999; margin-bottom: 30px; max-width: 500px; margin-left: auto; margin-right: auto;">
+            United by heritage, driven by progress. Join us in building a brighter future for our people.
+        </p>
+        <div class="footer-icons" style="display: flex; justify-content: center; gap: 25px;">
+            <a href="#" style="color: var(--gold); font-size: 1.5rem; transition: 0.3s;"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" style="color: var(--gold); font-size: 1.5rem; transition: 0.3s;"><i class="fab fa-instagram"></i></a>
+            <a href="#" style="color: var(--gold); font-size: 1.5rem; transition: 0.3s;"><i class="fab fa-twitter"></i></a>
+            <a href="#" style="color: var(--gold); font-size: 1.5rem; transition: 0.3s;"><i class="fab fa-youtube"></i></a>
+        </div>
+        <div style="margin-top: 40px; border-top: 1px solid #333; padding-top: 20px;">
+            <p style="color: #666; font-size: 0.9rem;">
+                &copy; 2026 NYANG COMMUNITY — All Rights Reserved
+            </p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // SCROLL REVEAL ANIMATION
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // MOBILE MENU TOGGLE
+        const hamburger = document.getElementById('hamburger');
+        const mobileNav = document.getElementById('mobile-nav');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('open');
+            mobileNav.classList.toggle('open');
+        });
+
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('.mobile-nav a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('open');
+                mobileNav.classList.remove('open');
+            });
+        });
+
+        // LIGHTBOX LOGIC (Updated to work with all sections)
+        const galleryImages = document.querySelectorAll('.gallery-card img');
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const closeBtn = document.getElementById('close-btn');
+
+        galleryImages.forEach(image => {
+            image.addEventListener('click', () => {
+                lightbox.style.display = 'flex';
+                // Use the current source, which might be the fallback
+                lightboxImg.src = image.src;
+            });
+        });
+
+        closeBtn.addEventListener('click', () => {
+            lightbox.style.display = 'none';
+        });
+
+        lightbox.addEventListener('click', (e) => {
+            if (e.target !== lightboxImg) {
+                lightbox.style.display = 'none';
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                lightbox.style.display = 'none';
+            }
+        });
+    </script>
+
+</body>
+</html>

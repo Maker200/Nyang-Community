@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="author" content="Samuel Maker Adoor">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="NYang-Marchardit Official Website">
+
+    <title>Nyang-Community</title>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+
+        /* =========================
+           RESET & VARIABLES (Existing + New)
+        ========================= */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            /* Palette */
+            --gold: #d4af37;
+            --gold-light: #f3e5ab;
+            --gold-gradient: linear-gradient(135deg, #b8860b 0%, #d4af37 100%);
+            
+            /* CREAM THEME (Default) */
+            --bg-dark: cream; 
+            --bg-card: cream;
+            --bg-glass: #2e2929d9;
+            
+            --text-main: #020101;
+            --text-muted: #666666;
+
+            /* DARK THEME OVERRIDES (For About & Contact Section) */
+            --dark-bg: #1a1a1a;
+            --dark-card: #252525;
+            --dark-text: white;
+            --dark-text-muted: #a0a0a0;
+
+            --red-accent: #800000;
+            --nav-h: 80px;
+            --border-light: rgba(0, 0, 0, 0.1);
+            --border-gold: rgba(212, 175, 55, 0.3);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            overflow-x: hidden;
+            line-height: 1.7;
+            background-image: radial-gradient(circle at 10% 20%, rgba(212, 175, 55, 0.05) 0%, transparent 20%),
+                              radial-gradient(circle at 90% 80%, rgba(0, 0, 0, 0.02) 0%, transparent 20%);
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            color: #222;
+        }
+
+        /* =========================
+           LOADER
+        ========================= */
+        #loader {
+            position: fixed;
+            inset: 0;
+            background: var(--bg-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 20px;
+            z-index: 9999;
+            transition: opacity 0.6s ease;
+        }
+
+        #loader.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loader-emblem {
+            width: 60px;
+            height: 60px;
+            border: 3px solid var(--border-light);
+            border-top-color: var(--gold);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        .loader-text {
+            font-family: 'Playfair Display', serif;
+            color: var(--text-main);
+            letter-spacing: 0.2em;
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* =========================
+           HEADER
+        ========================= */
+        header {
+            position: sticky;
+            top: 0;
+            width: 100%;
+            height: var(--nav-h);
+            background: darkred;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-light);
+            z-index: 1000;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+        }
+
+        .nav-wrapper {
+            max-width: 1400px;
+            height: 100%;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 40px;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: white;
+            text-decoration: none;
+            letter-spacing: -0.02em;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-img {
+            width: 45px;
+            height: 45px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 1px solid var(--gold);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 8px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            padding: 8px 16px;
+            border-radius: 30px;
+            transition: 0.3s;
+        }
+
+        nav ul li a:hover, nav ul li a.active {
+            color: var(--gold);
+            background: rgba(212, 175, 55, 0.1);
+        }
+
+        .hamburger {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .hamburger span {
+            display: block;
+            width: 25px;
+            height: 2px;
+            background: var(--text-main);
+            margin: 5px 0;
+            transition: 0.3s;
+        }
+
+        .hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+        .hamburger.open span:nth-child(2) { opacity: 0; }
+        .hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            top: var(--nav-h);
+            left: 0; width: 100%;
+            background: var(--bg-card);
+            padding: 20px;
+            border-bottom: 1px solid var(--border-light);
+            flex-direction: column;
+            gap: 10px;
+            z-index: 999;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+        }
+        .mobile-nav.open { display: flex; animation: fadeIn 0.3s ease; }
+        .mobile-nav a {
+            color: var(--text-main);
+            text-decoration: none;
+            padding: 12px;
+            border-bottom: 1px solid var(--border-light);
+            font-size: 1rem;
+        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* =========================
+           CAROUSEL FADE
+        ========================= */
+        .carousel-fade .carousel-item {
+            opacity: 0;
+            transition-duration: 3s;
+            transform: none;
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+        }
+        .carousel-fade .carousel-item.active { opacity: 1; position: relative; z-index: 2; }
+        .carousel-fade .carousel-item-next.carousel-item-start,
+        .carousel-fade .carousel-item-prev.carousel-item-end { opacity: 0; transform: none; z-index: 1; }
+
+        /* =========================
+           HERO SECTION
+        ========================= */
+        .hero {
+            position: relative;
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .hero-visual { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
+        #carouselHero { width: 100%; height: 100%; }
+        #carouselHero .carousel-inner { height: 100%; }
+        #carouselHero .carousel-item { height: 100%; }
+        #carouselHero .carousel-item img {
+            width: 100%; height: 100%; object-fit: cover;
+            filter: brightness(0.7) contrast(1.1);
+        }
+        .hero-overlay { position: absolute; inset: 0; background: rgba(0, 0, 0, 0.5); z-index: 2; }
+        .hero-content { position: relative; z-index: 3; text-align: center; max-width: 900px; padding: 0 20px; }
+        .hero-eyebrow { color: var(--gold); font-size: 0.9rem; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 20px; font-weight: 600; }
+        .hero-title {
+            font-size: clamp(2.5rem, 5vw, 4.5rem); line-height: 1.1; margin-bottom: 25px;
+            background: linear-gradient(to right, #fff, #ddd); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .hero-title span { background: var(--gold-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; display: block; }
+        .hero-desc { color: #f0f0f0; font-size: 1.1rem; margin-bottom: 35px; max-width: 600px; margin-left: auto; margin-right: auto; }
+        
+        .btn-modern {
+            display: inline-flex; align-items: center; gap: 10px;
+            background: var(--gold); color: #000; padding: 14px 36px; border-radius: 50px;
+            text-decoration: none; font-weight: 600; transition: all 0.3s ease; border: none; cursor: pointer; font-size: 1rem;
+        }
+        .btn-modern:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(212, 175, 55, 0.4); background: var(--gold-light); }
+
+        .pillars-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-top: 50px; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 25px; }
+        .pillar-item { text-align: center; }
+        .pillar-img { width: 60px; height: 60px; border-radius: 50%; object-fit: cover; margin: 0 auto 10px; border: 2px solid rgba(255,255,255,0.3); transition: 0.3s; }
+        .pillar-item:hover .pillar-img { border-color: var(--gold); transform: scale(1.1); }
+        .pillar-name { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: #ddd; }
+
+        /* =========================
+           GENERAL SECTIONS
+        ========================= */
+        section { padding: 100px 20px; }
+        .section-header { text-align: center; max-width: 800px; margin: 0 auto 60px; }
+        .section-label { color: var(--gold); font-size: 0.85rem; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 10px; display: block; }
+        .section-title { font-size: 2.5rem; margin-bottom: 15px; }
+        .section-title span { border-bottom: 3px solid var(--gold); }
+
+        /* =========================
+           ABOUT SECTION (DARK)
+        ========================= */
+        #about { background-color: var(--dark-bg) !important; color: var(--dark-text) !important; border-top: 1px solid #333; }
+        .about-container { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; max-width: 1400px; margin: 0 auto; align-items: start; }
+        #about h2, #about h3 { color: #fff !important; }
+        #about h3 { color: var(--gold) !important; }
+        #about .section-title { color: #fff !important; }
+        .about-text p { color: var(--dark-text-muted); margin-bottom: 1.5rem; font-size: 1.05rem; text-align: justify; }
+        .about-text h3 { font-size: 1.5rem; margin: 40px 0 15px; padding-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .stats-row { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-top: 60px; }
+        .stat-box { background: rgba(255,255,255,0.05); padding: 25px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); text-align: center; }
+        .stat-number { display: block; font-size: 2.5rem; font-weight: 700; color: var(--gold); font-family: 'Playfair Display', serif; }
+        .stat-label { font-size: 0.8rem; text-transform: uppercase; color: #aaa; letter-spacing: 1px; }
+        .about-carousel-wrapper { position: relative; border-radius: 20px; overflow: hidden; height: 700px; border: 1px solid rgba(255,255,255,0.1); position: sticky; top: 100px; }
+        .about-carousel-wrapper .carousel-item { height: 700px; }
+        .about-carousel-wrapper img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* =========================
+           LEADERSHIP SECTION
+        ========================= */
+        .leadership-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 30px; max-width: 1400px; margin: 0 auto; }
+        .leader-card { background: var(--bg-card); border: 1px solid var(--border-light); border-radius: 16px; padding: 40px 20px; text-align: center; transition: 0.4s ease; position: relative; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.03); }
+        .leader-card:hover { transform: translateY(-10px); border-color: var(--gold); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+        .leader-img { width: 130px; height: 130px; border-radius: 50%; object-fit: cover; margin-bottom: 20px; border: 3px solid var(--bg-card); outline: 2px solid var(--gold); }
+        .leader-name { color: var(--text-main); font-size: 1.1rem; font-family: 'Playfair Display', serif; margin-bottom: 8px; font-weight: 600; }
+        .leader-role { color: var(--text-muted); font-size: 0.9rem; line-height: 1.5; }
+
+        /* =========================
+           CONTACT SECTION (NEW)
+        ========================= */
+        #contact {
+            background-color: var(--dark-bg);
+            color: var(--dark-text);
+            position: relative;
+            padding: 120px 0;
+            border-top: 1px solid #333;
+        }
+
+        /* Decorative background glow */
+        #contact::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 80% 20%, rgba(212, 175, 55, 0.08), transparent 40%);
+            z-index: 0;
+        }
+
+        .contact-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 60px;
+            position: relative;
+            z-index: 1;
+            padding: 0 20px;
+        }
+
+        .contact-info h2 { color: #fff; font-size: 3rem; margin-bottom: 10px; }
+        .contact-info p { color: var(--dark-text-muted); margin-bottom: 40px; }
+
+        /* Contact Items */
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 30px;
+        }
+
+        .contact-icon {
+            width: 50px; height: 50px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border-gold);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            color: var(--gold);
+            font-size: 1.2rem;
+            margin-right: 20px;
+            flex-shrink: 0;
+            transition: 0.3s;
+        }
+
+        .contact-item:hover .contact-icon {
+            background: var(--gold);
+            color: #000;
+        }
+
+        .contact-text h4 { color: #fff; font-size: 1.1rem; margin-bottom: 5px; font-family: 'Plus Jakarta Sans', sans-serif; }
+        .contact-text p { color: #aaa; margin-bottom: 0; font-size: 0.95rem; }
+        .contact-text a { color: #aaa; text-decoration: none; transition: 0.3s; }
+        .contact-text a:hover { color: var(--gold); }
+
+        /* Map Placeholder */
+        .map-placeholder {
+            width: 100%;
+            height: 200px;
+            background: #252525;
+            border-radius: 12px;
+            margin-top: 40px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .map-placeholder img { width: 100%; height: 100%; object-fit: cover; opacity: 0.6; }
+        .map-pin {
+            position: absolute;
+            color: var(--gold);
+            font-size: 2rem;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-20px);}
+            60% {transform: translateY(-10px);}
+        }
+
+        /* Contact Form */
+        .contact-form-card {
+            background: var(--dark-card);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid #333;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+        }
+
+        .form-group { margin-bottom: 25px; }
+
+        .form-control {
+            background: rgba(0,0,0,0.2);
+            border: 1px solid #444;
+            color: #fff;
+            padding: 15px 20px;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: 0.3s;
+        }
+
+        .form-control:focus {
+            background: rgba(0,0,0,0.4);
+            border-color: var(--gold);
+            box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.1);
+            color: #fff;
+        }
+
+        .form-control::placeholder { color: #666; }
+
+        .form-label {
+            display: block;
+            margin-bottom: 10px;
+            color: #ddd;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        textarea.form-control { resize: none; height: 150px; }
+
+        .btn-submit {
+            width: 100%;
+            padding: 15px;
+            background: var(--gold-gradient);
+            color: #000;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-submit:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(212, 175, 55, 0.2);
+        }
+
+        /* Toast Notification */
+        .toast-container {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 10000;
+        }
+
+        .toast {
+            background: #fff;
+            color: #333;
+            padding: 20px 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            border-left: 5px solid var(--gold);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transform: translateX(200%);
+            transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            max-width: 350px;
+        }
+
+        .toast.show { transform: translateX(0); }
+        .toast i { color: #28a745; font-size: 1.5rem; }
+        .toast h5 { margin: 0; font-size: 1rem; }
+        .toast p { margin: 0; font-size: 0.85rem; color: #666; }
+
+        /* =========================
+           FOOTER & SOCIAL ICONS
+        ========================= */
+        footer {
+            background: #111; 
+            border-top: 1px solid #333;
+            padding: 60px 0 30px;
+            font-size: 0.9rem;
+            color: #ccc;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            max-width: 1200px;
+            margin: 0 auto 40px;
+            padding: 0 20px;
+            gap: 50px;
+        }
+
+        .footer-brand p { color: #999; margin-top: 20px; max-width: 300px; }
+        
+        /* Social Icons Styles */
+        .social-icons {
+            margin-top: 25px;
+            display: flex;
+            gap: 12px;
+        }
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+        .social-link:hover {
+            background: var(--gold);
+            color: #000;
+            transform: translateY(-4px);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+        }
+
+        .footer-links h4 { color: #fff; margin-bottom: 20px; font-size: 1.1rem; }
+        .footer-links ul { list-style: none; }
+        .footer-links li { margin-bottom: 12px; }
+        .footer-links a { color: #999; text-decoration: none; transition: 0.3s; }
+        .footer-links a:hover { color: var(--gold); padding-left: 5px; }
+
+        .copyright {
+            text-align: center;
+            color: #555;
+            padding-top: 20px;
+            border-top: 1px solid #222;
+        }
+
+        /* =========================
+           BACK TO TOP
+        ========================= */
+        #back-top {
+            position: fixed; bottom: 30px; right: 30px; width: 50px; height: 50px;
+            background: var(--bg-card); color: var(--gold); border: 1px solid var(--border-light);
+            border-radius: 50%; cursor: pointer; opacity: 0; transition: 0.3s; z-index: 999;
+            display: flex; align-items: center; justify-content: center; font-size: 1.2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        #back-top.visible { opacity: 1; }
+        #back-top:hover { background: var(--gold); color: #000; }
+
+        /* ANIMATIONS */
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+        @media (max-width: 992px) {
+            .hero-title { font-size: 2.5rem; }
+            .about-container { grid-template-columns: 1fr; gap: 40px; }
+            .about-carousel-wrapper { order: -1; height: 400px; position: relative; top: 0; }
+            .about-carousel-wrapper .carousel-item { height: 400px; }
+            nav { display: none; }
+            .hamburger { display: block; }
+            .pillars-grid { grid-template-columns: repeat(2, 1fr); }
+            .footer-content { grid-template-columns: 1fr; text-align: center; }
+            .footer-brand p { margin: 20px auto; }
+            .social-icons { justify-content: center; }
+            
+            /* Contact Responsive */
+            .contact-container { grid-template-columns: 1fr; }
+            .contact-info { text-align: center; }
+            .contact-item { justify-content: center; }
+            .contact-text { text-align: left; }
+        }
+
+        @media (max-width: 600px) {
+            .hero-title { font-size: 2rem; }
+            .pillars-grid { grid-template-columns: 1fr; }
+            .stats-row { grid-template-columns: 1fr; }
+            .section-title { font-size: 2rem; }
+            .contact-info h2 { font-size: 2.2rem; }
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <!-- LOADER -->
+    <div id="loader">
+        <div class="loader-emblem"></div>
+        <span class="loader-text">Nyang-Community</span>
+    </div>
+
+    <!-- HEADER -->
+    <header id="header">
+        <div class="nav-wrapper">
+            <a href="#" class="logo">
+                <img src="logor.jpg"  alt="Logo" class="logo-img">
+                <span>Nyang-Community</span>
+            </a>
+
+            <nav>
+                <ul>
+                   <li><a href="Home.html">Home</a></li>
+                    <li><a href="#about" class="active">About</a></li>
+                    <li><a href="#Leaderships">Leadership</a></li>
+                    <li><a href="Activities.html">Activities</a></li>
+                    <li><a href="Gallary.html">Gallery</a></li>
+                    <li><a href="events.html">Events</a></li>
+                    <li><a href="Bomas.html">Bomas</a></li>
+                    <li><a href="#contact" class="btn-modern" style="padding: 8px 20px; font-size: 0.8rem;">Contact</a></li>
+                </ul>
+            </nav>
+
+            <button class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- MOBILE NAV -->
+    <div class="mobile-nav" id="mobile-nav">
+        
+        <a href="#about">About</a>
+        <a href="#Leaderships">Leadership</a>
+        <a href="Activities.html">Activities</a>
+        <a href="Gallary.html">Gallery</a>
+        <a href="Bomas.html">Bomas</a>
+           <li><a href="events.html">Events</a></li>
+        <a href="#contact">Contact</a>
+    </div>
+
+    <!-- HERO SECTION -->
+    <section class="hero" id="top">
+        <div class="hero-visual">
+            <div id="carouselHero" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="5000">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="cows1.jpg" alt="img">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="da3.jpg"  alt="img">
+                    </div>
+                     <div class="carousel-item">
+                        <img src="m.jpg.jpg"  alt="img">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <div class="hero-eyebrow reveal">Uniting   Nyang-Marchardit</div>
+            <h1 class="hero-title">
+                Welcome to<br>
+                <span>Nyang-Community</span>
+            </h1>
+            <p class="hero-desc reveal">
+                Fostering  unity, preserving our rich  cultural  heritage, and  driving  sustainable  development for the  Nyang-Community.
+            </p>
+            <a href="https://www.google.com/search?q=histtory+of+dinka+rumbek+south+sudan&oq=histtory+of+dinka+Rumbek+south&gs_lcrp=EgZjaHJvbWUqCQgEECEYChigATIGCAAQRRg5MgkIARAhGAoYoAEyCQgCECEYChigATIJCAMQIRgKGKABMgkIBBAhGAoYoAHSAQkyMTk1N2owajeoAgCwAgA&sourceid=chrome&ie=UTF-8&source=chrome.ob" class="btn-modern reveal">
+                Explore More <i class="fas fa-arrow-right"></i>
+            </a>
+
+            
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT SECTION -->
+    <section id="about">
+        <div class="section-header reveal">
+            <span class="section-label">Who We Are</span>
+            <h2 class="section-title"><span>The Heart</span> of Nyang</h2>
+        </div>
+
+        <div class="about-container">
+            <div class="about-text reveal">
+                <p>
+                    The Nyang Community brings together the people of Nyang-Community to foster unity, preserve our cultural heritage, and drive sustainable development. 
+                    Nyang Community, usually referred to as Nyang Machardit or Nyang Kuei, is one of the resilient communities that make up Rumbek Central County. It is comprised of three sections, namely Dor, Yom and Awan under Kuei Division of Agaan whose economic livelihoods depend on crops and animal production.
+                </p>
+                
+                <p>
+                    The community has many schools, churches, and healthcare centers. Agriculture and cattle keeping are the main economic activities. Despite challenges such as flooding, poor road networks, and unemployment, the people remain united and committed to peace, development, and education.
+                </p>
+
+                <h3>Geographical Location</h3>
+                <p>
+                    Nyang Community is located in Rumbek Central County in Lakes State, Republic of South Sudan. It lies within the greater Bhar el Ghazal region. The area is characterized by flat plains, seasonal rivers, and grasslands suitable for cattle grazing and farming.
+                </p>
+
+                <h3>Cultural Practices</h3>
+                <p>
+                    The people of Nyang Community highly value their cultural identity. Traditional dances, songs, storytelling, wrestling, and initiation ceremonies are important parts of community life. Respect for elders and communal cooperation are strongly encouraged.
+                </p>
+
+                <p style="font-style: italic;">
+                    NB. Nyang Community is rich in culture, unity, and resilience. Despite the many challenges facing the community, the people continue to work together toward peace, education, and development.
+                </p>
+
+                <div class="stats-row">
+                    <div class="stat-box">
+                        <span class="stat-number">4</span>
+                        <span class="stat-label">Active Bomas</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-number">10K+</span>
+                        <span class="stat-label">Members</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-number">10+</span>
+                        <span class="stat-label">Projects</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-number">2026</span>
+                        <span class="stat-label">Vision Year</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="about-carousel-wrapper reveal">
+                <div id="aboutCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img src="den7.jpg" onerror="this.src='https://picsum.photos/seed/den7/600/800'" class="d-block w-100" alt="Community Life">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="den1.jpg" onerror="this.src='https://picsum.photos/seed/den1/600/800'" class="d-block w-100" alt="Community Life">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="engk.jpg" onerror="this.src='https://picsum.photos/seed/engk/600/800'" class="d-block w-100" alt="Community Life">
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="mako2.jpg" onerror="this.src='https://picsum.photos/seed/engk/600/800'" class="d-block w-100" alt="Community Life">
+                        </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#aboutCarousel" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon"></span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#aboutCarousel" data-bs-slide="next">
+                        <span class="carousel-control-next-icon"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- LEADERSHIP SECTION -->
+    <section id="Leaderships">
+        <div class="section-header reveal">
+            <span class="section-label">Our People</span>
+            <h2 class="section-title"><span>Community</span> Leadership</h2>
+            <p style="color: var(--text-muted);">Dedicated individuals guiding our path forward.</p>
+        </div>
+
+        <div class="leadership-grid">
+            <!-- Leader 1 -->
+            <div class="leader-card reveal">
+                <img src="manon1.jpg" onerror="this.src='https://picsum.photos/seed/manon/300/300'" alt="Leader" class="leader-img">
+                <h3 class="leader-name">Ustaz. Rev. Emmanuel Mading Manon</h3>
+                <p class="leader-role">Chairperson<br>Akolde Nyang-Community Council</p>
+            </div>
+            <!-- Leader 2 -->
+            <div class="leader-card reveal">
+                <img src="mtuen1.jpg" onerror="this.src='https://picsum.photos/seed/mtuen/300/300'" alt="Leader" class="leader-img">
+                <h3 class="leader-name">Ustaz. Peter Mading Matueny</h3>
+                <p class="leader-role">Chairperson<br>Nyang-Community Juba</p>
+            </div>
+            <!-- Leader 3 -->
+            <div class="leader-card reveal">
+                <img src="mako2.jpg" onerror="this.src='https://picsum.photos/seed/sultan/300/300'" alt="Chief" class="leader-img">
+                <h3 class="leader-name">Sultan Makol Malual Kodi</h3>
+                <p class="leader-role">Traditional Chief</p>
+            </div>
+            <!-- Leader 4 -->
+            <div class="leader-card reveal">
+                <img src="engk.jpg" onerror="this.src='https://picsum.photos/seed/eng/300/300'" alt="Eng" class="leader-img">
+                <h3 class="leader-name">Eng. Kuc Akuocbai Kuc</h3>
+                <p class="leader-role">Secretary<br>Nyang-Community Council</p>
+            </div>
+            <!-- Leader 5 -->
+            <div class="leader-card reveal">
+                <img src="jaco.jpg" onerror="this.src='https://picsum.photos/seed/jacob/300/300'" alt="Chief" class="leader-img">
+                <h3 class="leader-name">Jacob Matoch Wade</h3>
+                <p class="leader-role">Chairperson<br>MYA Rumbek-Branch</p>
+            </div>
+            <!-- Leader 6 -->
+            <div class="leader-card reveal">
+                <img src="mar2.jpg" onerror="this.src='https://picsum.photos/seed/marial/300/300'" alt="Leader" class="leader-img">
+                <h3 class="leader-name">Marial Maguen Mabor</h3>
+                <p class="leader-role">Leader of Matangai Gelweng</p>
+            </div>
+            <!-- Leader 7 -->
+            <div class="leader-card reveal">
+                <img src="dhu.jpg" onerror="this.src='https://picsum.photos/seed/dhukpuou/300/300'" alt="Leader" class="leader-img">
+                <h3 class="leader-name">Dhukpuou Maker Acinguac</h3>
+                <p class="leader-role">Chairperson<br>MYA Juba-Branch</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section id="contact">
+        <div class="section-header reveal">
+            <span class="section-label">Get in Touch</span>
+            <h2 class="section-title"><span>Contact</span> Us</h2>
+        </div>
+
+        <div class="contact-container reveal">
+            
+            <!-- Left: Contact Info -->
+            <div class="contact-info">
+                <h2>Let's Connect</h2>
+                <p>Have questions about the community, upcoming events, or want to support our initiatives? Reach out to us directly.</p>
+
+                <div class="contact-item">
+                    <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+                    <div class="contact-text">
+                        <h4>Headquarters</h4>
+                        <p>Rumbek Central County, Lakes State<br>South Sudan</p>
+                    </div>
+                </div>
+
+                <div class="contact-item">
+                    <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+                    <div class="contact-text">
+                        <h4>Email Us</h4>
+                        <p><a href="mailto:info@nyangcommunity.org">info@nyangcommunity.org</a></p>
+                        <p><a href="mailto:support@nyangcommunity.org">support@nyangcommunity.org</a></p>
+                    </div>
+                </div>
+
+                <div class="contact-item">
+                    <div class="contact-icon"><i class="fas fa-phone-alt"></i></div>
+                    <div class="contact-text">
+                        <h4>Call Us</h4>
+                        <p><a href="tel:+211929041017">+211 923435845</a></p>
+                        <p>Mon - Fri: 9:00 AM - 5:00 PM</p>
+                    </div>
+                </div>
+
+                <!-- Visual Map Placeholder -->
+                <div class="map-placeholder">
+                    <img src="https://picsum.photos/seed/map/600/300?grayscale" alt="Map Location">
+                    <div class="map-pin"><i class="fas fa-map-marker-alt"></i></div>
+                </div>
+            </div>
+
+            <!-- Right: Contact Form -->
+            <div class="contact-form-card">
+                <form id="contactForm">
+                    <div class="form-group">
+                        <label for="name" class="form-label">Full Name</label>
+                        <input type="text" class="form-control" id="name" placeholder="e.g. John Doe" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email" class="form-label">Email Address</label>
+                        <input type="email" class="form-control" id="email" placeholder="e.g. john@example.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="subject" class="form-label">Subject</label>
+                        <select class="form-control" id="subject">
+                            <option>General Inquiry</option>
+                            <option>Membership</option>
+                            <option>Events</option>
+                            <option>Donations</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message" class="form-label">Message</label>
+                        <textarea class="form-control" id="message" placeholder="How can we help you?" required></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-submit" id="submitBtn">
+                        Send Message <i class="fas fa-paper-plane" style="margin-left: 8px;"></i>
+                    </button>
+                </form>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <div class="logo">
+                    <span style="color:#fff;">Nyang-Community</span>
+                </div>
+                <p>Uniting the people of Nyang-Marchardit through shared purpose, pride, and collective progress.</p>
+                
+                <!-- Social Media Icons -->
+                <div class="social-icons">
+                    <a href="#" class="social-link" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-link" title="Twitter / X"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-link" title="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-link" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-links">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="Activities.html">Activities</a></li>
+                    <li><a href="#Leaderships">Leadership</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            &copy; 2026 Nyang-Community. Designed for Unity.
+        </div>
+    </footer>
+
+    <!-- Toast Notification -->
+    <div class="toast-container">
+        <div id="successToast" class="toast">
+            <i class="fas fa-check-circle"></i>
+            <div>
+                <h5>Message Sent!</h5>
+                <p>We will get back to you shortly.</p>
+            </div>
+        </div>
+    </div>
+
+    <button id="back-top"><i class="fas fa-arrow-up"></i></button>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // LOADER
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('loader');
+            loader.classList.add('hidden');
+        });
+
+        // MOBILE NAV
+        const hamburger = document.getElementById('hamburger');
+        const mobileNav = document.getElementById('mobile-nav');
+        
+        hamburger?.addEventListener('click', () => {
+            hamburger.classList.toggle('open');
+            mobileNav.classList.toggle('open');
+        });
+
+        document.querySelectorAll('.mobile-nav a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileNav.classList.remove('open');
+                hamburger.classList.remove('open');
+            });
+        });
+
+        // SCROLL REVEAL ANIMATION
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // BACK TO TOP
+        const backTop = document.getElementById('back-top');
+        window.addEventListener('scroll', () => {
+            if(window.scrollY > 500) backTop.classList.add('visible');
+            else backTop.classList.remove('visible');
+        });
+        backTop?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+        // FOOTER YEAR
+        document.querySelector('.copyright').innerHTML = `&copy; ${new Date().getFullYear()} Nyang Community. All Rights Reserved.`;
+
+        // =========================
+        // CONTACT FORM LOGIC
+        // =========================
+        const contactForm = document.getElementById('contactForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const successToast = document.getElementById('successToast');
+
+        contactForm?.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // 1. Change button state to "Sending"
+            const originalText = submitBtn.innerHTML;
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+            submitBtn.style.opacity = '0.7';
+
+            // 2. Simulate Network Request (2 seconds)
+            setTimeout(() => {
+                // 3. Reset Form
+                contactForm.reset();
+                
+                // 4. Reset Button
+                submitBtn.innerHTML = '<i class="fas fa-check"></i> Sent!';
+                submitBtn.style.background = '#28a745';
+                submitBtn.style.color = '#fff';
+
+                // 5. Show Toast
+                successToast.classList.add('show');
+
+                // 6. Hide Toast after 3 seconds
+                setTimeout(() => {
+                    successToast.classList.remove('show');
+                    
+                    // Reset button to original state after toast disappears
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.style.background = 'var(--gold-gradient)';
+                    submitBtn.style.color = '#000';
+                    submitBtn.style.opacity = '1';
+
+                }, 4000);
+
+            }, 2000);
+        });
+    </script>
+
+</body>
+</html>
