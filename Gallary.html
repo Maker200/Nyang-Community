@@ -33,7 +33,7 @@
         }
 
         :root {
-            /* Palette (Matching Home Page) */
+            /* Palette */
             --gold: #d4af37;
             --gold-light: #f3e5ab;
             --gold-gradient: linear-gradient(135deg, #b8860b 0%, #d4af37 100%);
@@ -73,20 +73,20 @@
         }
 
         /* =========================
-           HEADER (Matches Home Page)
+           HEADER (Matches Index.html)
         ========================= */
         header {
             position: sticky;
             top: 0;
             width: 100%;
             height: var(--nav-h);
-            background:darkred;
+            background: darkred; /* Dark Red background */
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--border-light);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
             z-index: 1000;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
 
         .nav-wrapper {
@@ -109,6 +109,7 @@
             display: flex;
             align-items: center;
             gap: 12px;
+            z-index: 1002; /* Ensure logo stays on top */
         }
 
         .logo-img {
@@ -117,6 +118,7 @@
             object-fit: cover;
             border-radius: 8px;
             border: 1px solid var(--gold);
+            background: #fff;
         }
 
         nav ul {
@@ -139,43 +141,50 @@
 
         nav ul li a:hover, nav ul li a.active {
             color: var(--gold);
-            background: rgba(212, 175, 55, 0.1);
+            background: rgba(212, 175, 55, 0.15);
         }
 
-        /* Hamburger for Mobile */
+        /* Hamburger for Mobile - FIXED */
         .hamburger {
-            display: none;
+            display: none; /* Hidden on desktop */
             background: none;
             border: none;
             cursor: pointer;
+            position: relative;
+            z-index: 1002; /* Above header */
+            padding: 5px;
         }
         
         .hamburger span {
             display: block;
-            width: 25px;
-            height: 2px;
-            background: var(--text-main);
+            width: 30px; /* Slightly wider */
+            height: 3px; /* Slightly thicker for visibility */
+            background: #fff; /* White color for contrast on dark red */
             margin: 5px 0;
             transition: 0.3s;
+            border-radius: 2px;
         }
 
-        .hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+        .hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(6px, 6px); background: #fff; }
         .hamburger.open span:nth-child(2) { opacity: 0; }
-        .hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+        .hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(6px, -6px); background: #fff; }
 
         /* Mobile Nav */
         .mobile-nav {
             display: none;
             position: fixed;
             top: var(--nav-h);
-            left: 0; width: 100%;
-            background: var(--bg-card);
+            left: 0; 
+            width: 100%;
+            background: #fff; /* White background for menu items */
             padding: 20px;
             border-bottom: 1px solid var(--border-light);
             flex-direction: column;
             gap: 10px;
-            z-index: 999;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            z-index: 1001; /* Just below hamburger/header */
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            max-height: calc(100vh - var(--nav-h));
+            overflow-y: auto;
         }
         .mobile-nav.open { display: flex; animation: fadeIn 0.3s ease; }
         .mobile-nav a {
@@ -184,6 +193,11 @@
             padding: 12px;
             border-bottom: 1px solid var(--border-light);
             font-size: 1rem;
+            font-weight: 500;
+        }
+        .mobile-nav a.active {
+            color: var(--red-accent);
+            font-weight: 700;
         }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
 
@@ -376,13 +390,15 @@
         }
 
         /* RESPONSIVE */
-        @media (max-width: 768px) {
-            nav { display: none; }
-            .hamburger { display: flex; flex-direction: column; justify-content: space-around; height: 24px;}
+        /* Using 992px to catch tablets as well */
+        @media (max-width: 992px) {
+            nav { display: none !important; }
+            .hamburger { display: flex !important; flex-direction: column; justify-content: space-around; }
             .gallery-grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
             .page-hero { padding: 80px 20px 40px; }
             .gallery-card { height: 300px; }
             #close-btn { top: 20px; right: 20px; }
+            .nav-wrapper { padding: 0 20px; }
         }
     </style>
 
@@ -403,11 +419,9 @@
                     <li><a href="index.html">Home</a></li>
                      <li><a href="index.html#contact">Contact</a></li>
                     <li><a href="Activities.html">Activities</a></li>
-                    <!-- Corrected spelling for consistency, though kept Gallary if user file is named that -->
                     <li><a href="Gallary.html" class="active">Gallary</a></li>
                     <li><a href="Bomas.html">Bomas</a></li>
                     <li><a href="Events.html">Events</a></li>
-                   
                 </ul>
             </nav>
 
@@ -422,12 +436,11 @@
     <!-- MOBILE NAV -->
     <div class="mobile-nav" id="mobile-nav">
         <a href="index.html">Home</a>
-       <a href="index.html#contact">Contacts</a>
+        <a href="index.html#contact">Contacts</a>
         <a href="Activities.html">Activities</a>
         <a href="Gallary.html" class="active">Gallary</a>
         <a href="Bomas.html">Bomas</a>
         <a href="Events.html">Events</a>
-        
     </div>
 
     <!-- PAGE HERO -->
@@ -445,7 +458,7 @@
         </div>
 
         <div class="gallery-grid">
-            <!-- Portraits (Vertical Images) -->
+            <!-- Set 1: Original Files -->
             <div class="gallery-card reveal">
                 <div class="img-wrapper">
                     <img src="ani1.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/ani1/600/800'" alt="Community Emblem">
@@ -612,350 +625,351 @@
                     <img src="da4.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/da4/600/800'" alt="Community Celebration">
                     <div class="card-overlay"><div class="card-caption">Community Celebration</div></div>
                 </div>
-                <!--more imges begi-->
-                    <div class="img-wrapper">
-                    <img src="g1.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/ani1/600/800'" alt="Community Emblem">
-                    <div class="card-overlay"><div class="card-caption">Community Emblem</div></div>
+            </div>
+
+            <!-- Set 2: g1 to g24 -->
+            <div class="gallery-card reveal">
+                <div class="img-wrapper">
+                    <img src="g1.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/g1/600/800'" alt="Gallery Image">
+                    <div class="card-overlay"><div class="card-caption">Community Image</div></div>
                 </div>
             </div>
 
             <div class="gallery-card reveal">
                 <div class="img-wrapper">
-                    <img src="g2.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/bull1/600/800'" alt="Traditional Culture">
-                    <div class="card-overlay"><div class="card-caption">Traditional Culture</div></div>
+                    <img src="g2.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/g2/600/800'" alt="Gallery Image">
+                    <div class="card-overlay"><div class="card-caption">Community Image</div></div>
                 </div>
             </div>
 
             <div class="gallery-card reveal">
                 <div class="img-wrapper">
-                    <img src="g3.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/gir1/600/800'" alt="Girls Identity">
-                    <div class="card-overlay"><div class="card-caption">Girls Showing Cultural Identity</div></div>
+                    <img src="g3.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/g3/600/800'" alt="Gallery Image">
+                    <div class="card-overlay"><div class="card-caption">Community Image</div></div>
                 </div>
             </div>
 
             <div class="gallery-card reveal">
                 <div class="img-wrapper">
-                    <img src="g4.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/girl2/600/800'" alt="Community Event">
-                    <div class="card-overlay"><div class="card-caption">Community Event</div></div>
+                    <img src="g4.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/g4/600/800'" alt="Gallery Image">
+                    <div class="card-overlay"><div class="card-caption">Community Image</div></div>
                 </div>
             </div>
 
             <div class="gallery-card reveal">
                 <div class="img-wrapper">
-                    <img src="g5.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/g5/600/800'" alt="Community Event">
-                    <div class="card-overlay"><div class="card-caption">Community Event</div></div>
+                    <img src="g5.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/g5/600/800'" alt="Gallery Image">
+                    <div class="card-overlay"><div class="card-caption">Community Image</div></div>
                 </div>
             </div>
 
             <div class="gallery-card reveal">
                 <div class="img-wrapper">
-                    <img src="g6.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/g6/600/800'" alt="Community Event">
-                    <div class="card-overlay"><div class="card-caption">Community Event</div></div>
+                    <img src="g6.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/g6/600/800'" alt="Gallery Image">
+                    <div class="card-overlay"><div class="card-caption">Community Image</div></div>
                 </div>
             </div>
 
             <div class="gallery-card reveal">
                 <div class="img-wrapper">
-                    <img src="g7.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/dm2/600/800'" alt="Community Event">
-                    <div class="card-overlay"><div class="card-caption">Community Event</div></div>
+                    <img src="g7.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/g7/600/800'" alt="Gallery Image">
+                    <div class="card-overlay"><div class="card-caption">Community Image</div></div>
                 </div>
             </div>
 
             <div class="gallery-card reveal">
                 <div class="img-wrapper">
-                    <img src="g8.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/girl3/600/800'" alt="Engineer Kuch">
-                    <div class="card-overlay"><div class="card-caption">Eng. Kuch Akuocbai</div></div>
+                    <img src="g8.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/g8/600/800'" alt="Gallery Image">
+                    <div class="card-overlay"><div class="card-caption">Community Image</div></div>
                 </div>
             </div>
 
             <div class="gallery-card reveal">
                 <div class="img-wrapper">
-                    <img src="g9.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/mako1/600/800'" alt="Sultan Makol">
-                    <div class="card-overlay"><div class="card-caption">Sultan Makol Malual Kodi</div></div>
+                    <img src="g9.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/g9/600/800'" alt="Gallery Image">
+                    <div class="card-overlay"><div class="card-caption">Community Image</div></div>
                 </div>
             </div>
 
             <div class="gallery-card reveal">
                 <div class="img-wrapper">
-                    <img src="g10.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/kodi3/600/800'" alt="Great Sultan">
-                    <div class="card-overlay"><div class="card-caption">The Great Sultan Malual Kodi</div></div>
+                    <img src="g10.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/g10/600/800'" alt="Gallery Image">
+                    <div class="card-overlay"><div class="card-caption">Community Image</div></div>
                 </div>
             </div>
 
             <div class="gallery-card reveal">
                 <div class="img-wrapper">
-                    <img src="g11.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/ako/600/800'" alt="Leadership">
-                    <div class="card-overlay"><div class="card-caption">Leadership</div></div>
+                    <img src="g11.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/g11/600/800'" alt="Gallery Image">
+                    <div class="card-overlay"><div class="card-caption">Community Image</div></div>
                 </div>
             </div>
 
             <div class="gallery-card reveal">
                 <div class="img-wrapper">
-                    <img src="g12.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/mee1/600/800'" alt="Community Meeting">
-                    <div class="card-overlay"><div class="card-caption">Community Meeting</div></div>
+                    <img src="g12.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/g12/600/800'" alt="Gallery Image">
+                    <div class="card-overlay"><div class="card-caption">Community Image</div></div>
                 </div>
             </div>
 
             <div class="gallery-card reveal">
                 <div class="img-wrapper">
-                    <img src="g13.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/cow/600/800'" alt="Cattle Heritage">
-                    <div class="card-overlay"><div class="card-caption">Cattle Heritage</div></div>
+                    <img src="g13.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/g13/600/800'" alt="Gallery Image">
+                    <div class="card-overlay"><div class="card-caption">Community Image</div></div>
                 </div>
             </div>
 
             <div class="gallery-card reveal">
                 <div class="img-wrapper">
-                    <img src="g14.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/dm1/600/800'" alt="Community Event">
-                    <div class="card-overlay"><div class="card-caption">Community Event</div></div>
+                    <img src="g14.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/g14/600/800'" alt="Gallery Image">
+                    <div class="card-overlay"><div class="card-caption">Community Image</div></div>
                 </div>
             </div>
 
             <div class="gallery-card reveal">
                 <div class="img-wrapper">
-                    <img src="g16.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/luak1/600/800'" alt="Luak Ajok">
-                    <div class="card-overlay"><div class="card-caption">Luak Ajok</div></div>
+                    <img src="g16.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/g16/600/800'" alt="Gallery Image">
+                    <div class="card-overlay"><div class="card-caption">Community Image</div></div>
                 </div>
             </div>
 
             <div class="gallery-card reveal">
                 <div class="img-wrapper">
-                    <img src="g17.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/jaco/600/800'" alt="Jacob Matoch Wade">
-                    <div class="card-overlay"><div class="card-caption">Jacob Matoch Wade<br><small>Chairperson MYA Juba Branch</small></div></div>
+                    <img src="g17.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/g17/600/800'" alt="Gallery Image">
+                    <div class="card-overlay"><div class="card-caption">Community Image</div></div>
                 </div>
             </div>
 
             <div class="gallery-card reveal">
                 <div class="img-wrapper">
-                    <img src="g18.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/manon1/600/800'" alt="Rev Emmanuel">
-                    <div class="card-overlay"><div class="card-caption">Ustaz Rev Emmanuel Mading Manon</div></div>
+                    <img src="g18.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/g18/600/800'" alt="Gallery Image">
+                    <div class="card-overlay"><div class="card-caption">Community Image</div></div>
                 </div>
             </div>
 
             <div class="gallery-card reveal">
                 <div class="img-wrapper">
-                    <img src="g19.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/mtuen1/600/800'" alt="Peter Mading">
-                    <div class="card-overlay"><div class="card-caption">Ustaz Peter Mading Matueny</div></div>
+                    <img src="g19.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/g19/600/800'" alt="Gallery Image">
+                    <div class="card-overlay"><div class="card-caption">Community Image</div></div>
                 </div>
             </div>
 
             <div class="gallery-card reveal">
                 <div class="img-wrapper">
-                    <img src="g20.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/cows1/600/800'" alt="Cows Grazing">
-                    <div class="card-overlay"><div class="card-caption">Cows Grazing</div></div>
+                    <img src="g20.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/g20/600/800'" alt="Gallery Image">
+                    <div class="card-overlay"><div class="card-caption">Community Image</div></div>
                 </div>
             </div>
 
             <div class="gallery-card reveal">
                 <div class="img-wrapper">
-                    <img src="g21.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/dhu/600/800'" alt="Dhukpou Maker">
-                    <div class="card-overlay"><div class="card-caption">Dhukpou Maker</div></div>
+                    <img src="g21.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/g21/600/800'" alt="Gallery Image">
+                    <div class="card-overlay"><div class="card-caption">Community Image</div></div>
                 </div>
             </div>
 
             <div class="gallery-card reveal">
                 <div class="img-wrapper">
-                    <img src="g22.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/meet2/600/800'" alt="Community Gathering">
-                    <div class="card-overlay"><div class="card-caption">Community Gathering</div></div>
+                    <img src="g22.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/g22/600/800'" alt="Gallery Image">
+                    <div class="card-overlay"><div class="card-caption">Community Image</div></div>
                 </div>
             </div>
 
             <div class="gallery-card reveal">
                 <div class="img-wrapper">
-                    <img src="g23.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/mee5/600/800'" alt="Cultural Identity">
-                    <div class="card-overlay"><div class="card-caption">Cultural Identity</div></div>
+                    <img src="g23.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/g23/600/800'" alt="Gallery Image">
+                    <div class="card-overlay"><div class="card-caption">Community Image</div></div>
                 </div>
             </div>
 
             <div class="gallery-card reveal">
                 <div class="img-wrapper">
-                    <img src="mee6.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/mee6/600/800'" alt="Education Program">
+                    <img src="mee6.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/mee6b/600/800'" alt="Gallery Image">
                     <div class="card-overlay"><div class="card-caption">Education Program</div></div>
                 </div>
             </div>
 
             <div class="gallery-card reveal">
                 <div class="img-wrapper">
-                    <img src="g24.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/da4/600/800'" alt="Community Celebration">
+                    <img src="g24.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/g24/600/800'" alt="Gallery Image">
                     <div class="card-overlay"><div class="card-caption">Community Celebration</div></div>
                 </div>
+            </div>
 
-
-                <!--more imges end-->
-
-                <!-- Add more cards as needed -->
-
+            <!-- Set 3: den1 to den16 -->
+            <div class="gallery-card reveal">
                 <div class="img-wrapper">
-                    <img src="den1.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/ani1/600/800'" alt="Community Emblem">
-                    <div class="card-overlay"><div class="card-caption">Community Emblem</div></div>
+                    <img src="den1.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/den1/600/800'" alt="Gallery Image">
+                    <div class="card-overlay"><div class="card-caption">Community Image</div></div>
                 </div>
             </div>
 
             <div class="gallery-card reveal">
                 <div class="img-wrapper">
-                    <img src="den2.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/bull1/600/800'" alt="Traditional Culture">
-                    <div class="card-overlay"><div class="card-caption">Traditional Culture</div></div>
+                    <img src="den2.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/den2/600/800'" alt="Gallery Image">
+                    <div class="card-overlay"><div class="card-caption">Community Image</div></div>
                 </div>
             </div>
 
             <div class="gallery-card reveal">
                 <div class="img-wrapper">
-                    <img src="den3.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/gir1/600/800'" alt="Girls Identity">
-                    <div class="card-overlay"><div class="card-caption">Girls Showing Cultural Identity</div></div>
+                    <img src="den3.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/den3/600/800'" alt="Gallery Image">
+                    <div class="card-overlay"><div class="card-caption">Community Image</div></div>
                 </div>
             </div>
 
             <div class="gallery-card reveal">
                 <div class="img-wrapper">
-                    <img src="den4.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/girl2/600/800'" alt="Community Event">
-                    <div class="card-overlay"><div class="card-caption">Community Event</div></div>
+                    <img src="den4.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/den4/600/800'" alt="Gallery Image">
+                    <div class="card-overlay"><div class="card-caption">Community Image</div></div>
                 </div>
             </div>
 
             <div class="gallery-card reveal">
                 <div class="img-wrapper">
-                    <img src="den5.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/mako3/600/800'" alt="Community Event">
-                    <div class="card-overlay"><div class="card-caption">Community Event</div></div>
+                    <img src="den5.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/den5/600/800'" alt="Gallery Image">
+                    <div class="card-overlay"><div class="card-caption">Community Image</div></div>
                 </div>
             </div>
 
             <div class="gallery-card reveal">
                 <div class="img-wrapper">
-                    <img src="den6.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/kar/600/800'" alt="Community Event">
-                    <div class="card-overlay"><div class="card-caption">Community Event</div></div>
+                    <img src="den6.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/den6/600/800'" alt="Gallery Image">
+                    <div class="card-overlay"><div class="card-caption">Community Image</div></div>
                 </div>
             </div>
 
             <div class="gallery-card reveal">
                 <div class="img-wrapper">
-                    <img src="den7.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/dm2/600/800'" alt="Community Event">
-                    <div class="card-overlay"><div class="card-caption">Community Event</div></div>
+                    <img src="den7.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/den7/600/800'" alt="Gallery Image">
+                    <div class="card-overlay"><div class="card-caption">Community Image</div></div>
                 </div>
             </div>
 
             <div class="gallery-card reveal">
                 <div class="img-wrapper">
-                    <img src="den8.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/girl3/600/800'" alt="Engineer Kuch">
-                    <div class="card-overlay"><div class="card-caption">Eng. Kuch Akuocbai</div></div>
+                    <img src="den8.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/den8/600/800'" alt="Gallery Image">
+                    <div class="card-overlay"><div class="card-caption">Community Image</div></div>
                 </div>
             </div>
 
             <div class="gallery-card reveal">
                 <div class="img-wrapper">
-                    <img src="den9.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/mako1/600/800'" alt="Sultan Makol">
-                    <div class="card-overlay"><div class="card-caption">Sultan Makol Malual Kodi</div></div>
+                    <img src="den9.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/den9/600/800'" alt="Gallery Image">
+                    <div class="card-overlay"><div class="card-caption">Community Image</div></div>
                 </div>
             </div>
 
             <div class="gallery-card reveal">
                 <div class="img-wrapper">
-                    <img src="den10.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/kodi3/600/800'" alt="Great Sultan">
-                    <div class="card-overlay"><div class="card-caption">The Great Sultan Malual Kodi</div></div>
+                    <img src="den10.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/den10/600/800'" alt="Gallery Image">
+                    <div class="card-overlay"><div class="card-caption">Community Image</div></div>
                 </div>
             </div>
 
             <div class="gallery-card reveal">
                 <div class="img-wrapper">
-                    <img src="den11.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/ako/600/800'" alt="Leadership">
-                    <div class="card-overlay"><div class="card-caption">Leadership</div></div>
+                    <img src="den11.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/den11/600/800'" alt="Gallery Image">
+                    <div class="card-overlay"><div class="card-caption">Community Image</div></div>
                 </div>
             </div>
 
             <div class="gallery-card reveal">
                 <div class="img-wrapper">
-                    <img src="den12.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/mee1/600/800'" alt="Community Meeting">
-                    <div class="card-overlay"><div class="card-caption">Community Meeting</div></div>
+                    <img src="den12.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/den12/600/800'" alt="Gallery Image">
+                    <div class="card-overlay"><div class="card-caption">Community Image</div></div>
                 </div>
             </div>
 
             <div class="gallery-card reveal">
                 <div class="img-wrapper">
-                    <img src="den13.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/cow/600/800'" alt="Cattle Heritage">
-                    <div class="card-overlay"><div class="card-caption">Cattle Heritage</div></div>
+                    <img src="den13.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/den13/600/800'" alt="Gallery Image">
+                    <div class="card-overlay"><div class="card-caption">Community Image</div></div>
                 </div>
             </div>
 
             <div class="gallery-card reveal">
                 <div class="img-wrapper">
-                    <img src="den14.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/dm1/600/800'" alt="Community Event">
-                    <div class="card-overlay"><div class="card-caption">Community Event</div></div>
+                    <img src="den14.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/den14/600/800'" alt="Gallery Image">
+                    <div class="card-overlay"><div class="card-caption">Community Image</div></div>
                 </div>
             </div>
 
             <div class="gallery-card reveal">
                 <div class="img-wrapper">
-                    <img src="den15.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/luak1/600/800'" alt="Luak Ajok">
-                    <div class="card-overlay"><div class="card-caption">Luak Ajok</div></div>
+                    <img src="den15.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/den15/600/800'" alt="Gallery Image">
+                    <div class="card-overlay"><div class="card-caption">Community Image</div></div>
                 </div>
             </div>
 
             <div class="gallery-card reveal">
                 <div class="img-wrapper">
-                    <img src="den16.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/jaco/600/800'" alt="Jacob Matoch Wade">
-                    <div class="card-overlay"><div class="card-caption">Jacob Matoch Wade<br><small>Chairperson MYA Juba Branch</small></div></div>
+                    <img src="den16.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/den16/600/800'" alt="Gallery Image">
+                    <div class="card-overlay"><div class="card-caption">Community Image</div></div>
+                </div>
+            </div>
+
+            <!-- Set 4: bo1 to bo8 -->
+            <div class="gallery-card reveal">
+                <div class="img-wrapper">
+                    <img src="bo1.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/bo1/600/800'" alt="Gallery Image">
+                    <div class="card-overlay"><div class="card-caption">Community Image</div></div>
                 </div>
             </div>
 
             <div class="gallery-card reveal">
                 <div class="img-wrapper">
-                    <img src="bo1.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/manon1/600/800'" alt="Rev Emmanuel">
-                    <div class="card-overlay"><div class="card-caption">Ustaz Rev Emmanuel Mading Manon</div></div>
+                    <img src="bo2.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/bo2/600/800'" alt="Gallery Image">
+                    <div class="card-overlay"><div class="card-caption">Community Image</div></div>
                 </div>
             </div>
 
             <div class="gallery-card reveal">
                 <div class="img-wrapper">
-                    <img src="bo2.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/mtuen1/600/800'" alt="Peter Mading">
-                    <div class="card-overlay"><div class="card-caption">Ustaz Peter Mading Matueny</div></div>
+                    <img src="bo3.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/bo3/600/800'" alt="Gallery Image">
+                    <div class="card-overlay"><div class="card-caption">Community Image</div></div>
                 </div>
             </div>
 
             <div class="gallery-card reveal">
                 <div class="img-wrapper">
-                    <img src="bo3.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/cows1/600/800'" alt="Cows Grazing">
-                    <div class="card-overlay"><div class="card-caption">Cows Grazing</div></div>
+                    <img src="bo4.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/bo4/600/800'" alt="Gallery Image">
+                    <div class="card-overlay"><div class="card-caption">Community Image</div></div>
                 </div>
             </div>
 
             <div class="gallery-card reveal">
                 <div class="img-wrapper">
-                    <img src="bo4.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/dhu/600/800'" alt="Dhukpou Maker">
-                    <div class="card-overlay"><div class="card-caption">Dhukpou Maker</div></div>
+                    <img src="bo5.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/bo5/600/800'" alt="Gallery Image">
+                    <div class="card-overlay"><div class="card-caption">Community Image</div></div>
                 </div>
             </div>
 
             <div class="gallery-card reveal">
                 <div class="img-wrapper">
-                    <img src="bo5.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/meet2/600/800'" alt="Community Gathering">
-                    <div class="card-overlay"><div class="card-caption">Community Gathering</div></div>
+                    <img src="bo6.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/bo6/600/800'" alt="Gallery Image">
+                    <div class="card-overlay"><div class="card-caption">Community Image</div></div>
                 </div>
             </div>
 
             <div class="gallery-card reveal">
                 <div class="img-wrapper">
-                    <img src="bo6.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/mee5/600/800'" alt="Cultural Identity">
-                    <div class="card-overlay"><div class="card-caption">Cultural Identity</div></div>
+                    <img src="bo7.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/bo7/600/800'" alt="Gallery Image">
+                    <div class="card-overlay"><div class="card-caption">Community Image</div></div>
                 </div>
             </div>
 
             <div class="gallery-card reveal">
                 <div class="img-wrapper">
-                    <img src="bo7.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/mee6/600/800'" alt="Education Program">
-                    <div class="card-overlay"><div class="card-caption">Education Program</div></div>
+                    <img src="bo8.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/bo8/600/800'" alt="Gallery Image">
+                    <div class="card-overlay"><div class="card-caption">Community Image</div></div>
                 </div>
             </div>
 
-            <div class="gallery-card reveal">
-                <div class="img-wrapper">
-                    <img src="bo8.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/da4/600/800'" alt="Community Celebration">
-                    <div class="card-overlay"><div class="card-caption">Community Celebration</div></div>
-                </div>
-
-                <!-- end -->
-            </div>
         </div>
     </section>
 
-    <!-- SECTION 2: HERITAGE & EVENTS (Regenerated Content) -->
+    <!-- SECTION 2: HERITAGE & EVENTS -->
     <section id="heritage" style="background-color: #fff;">
         <div class="gallery-wrapper">
             <div class="section-header reveal">
@@ -965,15 +979,16 @@
             </div>
 
             <div class="gallery-grid">
-                <!-- New Generated Cards -->
                 <div class="gallery-card reveal">
                     <div class="img-wrapper">
                         <img src="cows1.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/heritage1/800/600'" alt="Sunset over the village">
                         <div class="card-overlay"><div class="card-caption">Sunset over the village</div></div>
                     </div>
+                </div>
 
+                <div class="gallery-card reveal">
                     <div class="img-wrapper">
-                        <img src="cows3.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/heritage1/800/600'" alt="Sunset over the village">
+                        <img src="cows3.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/heritage2/800/600'" alt="Sunset over the village">
                         <div class="card-overlay"><div class="card-caption">Sunset over the village</div></div>
                     </div>
                 </div>
@@ -995,18 +1010,15 @@
                 <div class="gallery-card reveal">
                     <div class="img-wrapper">
                         <img src="bo5.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/meet3/600/800'" alt="Elders Council">
-                        <div class="card-overlay"><div class="card-caption"></div></div>
+                        <div class="card-overlay"><div class="card-caption">Elders Council</div></div>
                     </div>
                 </div>
 
                 <div class="gallery-card reveal">
                     <div class="img-wrapper">
                         <img src="bull1.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/seed/youth1/800/600'" alt="Youth Sports Day">
-                        <div class="card-overlay"><div class="card-caption"></div></div>
+                        <div class="card-overlay"><div class="card-caption">Youth Sports Day</div></div>
                     </div>
-                </div>
-
-                
                 </div>
             </div>
         </div>
@@ -1069,7 +1081,7 @@
             });
         });
 
-        // LIGHTBOX LOGIC (Updated to work with all sections)
+        // LIGHTBOX LOGIC
         const galleryImages = document.querySelectorAll('.gallery-card img');
         const lightbox = document.getElementById('lightbox');
         const lightboxImg = document.getElementById('lightbox-img');
@@ -1078,7 +1090,6 @@
         galleryImages.forEach(image => {
             image.addEventListener('click', () => {
                 lightbox.style.display = 'flex';
-                // Use the current source, which might be the fallback
                 lightboxImg.src = image.src;
             });
         });

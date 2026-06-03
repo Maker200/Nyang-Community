@@ -143,21 +143,28 @@
             cursor: pointer;
         }
         
+        /* FIXED: White hamburger lines for visibility on Dark Red header */
         .hamburger span {
             display: block;
             width: 25px;
             height: 2px;
-            background: var(--text-main);
+            background: #ffffff;
             margin: 5px 0;
             transition: 0.3s;
         }
+
+        /* ADDED: Animation for Hamburger to become 'X' */
+        .hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+        .hamburger.open span:nth-child(2) { opacity: 0; }
+        .hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
 
         .mobile-nav {
             display: none;
             position: fixed;
             top: var(--nav-h);
             left: 0; width: 100%;
-            background: var(--bg-card);
+            /* FIXED: Black background */
+            background: #000000; 
             padding: 20px;
             border-bottom: 1px solid var(--border-light);
             flex-direction: column;
@@ -166,12 +173,25 @@
             box-shadow: 0 10px 20px rgba(0,0,0,0.05);
         }
         .mobile-nav.open { display: flex; }
+        
+        /* FIXED: White text and visible borders */
         .mobile-nav a {
-            color: var(--text-main);
+            color: #ffffff;
             text-decoration: none;
             padding: 12px;
-            border-bottom: 1px solid var(--border-light);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
             font-size: 1rem;
+            transition: 0.3s;
+        }
+        
+        .mobile-nav a:hover {
+            color: var(--gold);
+            padding-left: 20px;
+        }
+        
+        .mobile-nav a.active {
+            color: var(--gold);
+            font-weight: 700;
         }
 
         /* =========================
@@ -497,7 +517,7 @@
                     <li><a href="index.html#Leaderships">Leadership</a></li>
                     <li><a href="Activities.html">Activities</a></li>
                     <li><a href="Gallary.html">Gallary</a></li>
-                    <li><a href="Events.html">Events</a></li>
+                    <li><a href="Events.html" class="active">Events</a></li>
                     <li><a href="Bomas.html">Bomas</a></li>
         
                 </ul>
@@ -513,14 +533,14 @@
 
     <!-- MOBILE NAV -->
     <div class="mobile-nav" id="mobile-nav">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="index.html#about">About</a></li>
-         <li><a href="index.html#Leaderships">Leadership</a></li>
-        <li><a href="Activities.html" class="active">Activities</a></li>
-        <li><a href="Events.html">Events</a></li>
-          <li></li><a href="Gallary.html">Gallary</a></li>
-
-        <li><a href="index.html#contact" style="padding: 8px 20px; background: var(--gold); border-radius: 30px; color: #000;">Contact</a></li>
+        <a href="index.html">Home</a>
+        <a href="index.html#about">About</a>
+        <a href="index.html#Leaderships">Leadership</a>
+        <a href="Activities.html">Activities</a>
+        <a href="Events.html" class="active">Events</a>
+        <a href="Gallary.html">Gallary</a>
+        <a href="Bomas.html">Bomas</a>
+        <a href="index.html#contact" style="padding: 12px; background: var(--gold); border-radius: 30px; color: #000; text-align: center; font-weight: 700;">Contact</a>
     </div>
 
     <!-- PAGE HERO -->
@@ -706,7 +726,16 @@
         const mobileNav = document.getElementById('mobile-nav');
         
         hamburger?.addEventListener('click', () => {
+            hamburger.classList.toggle('open'); // Added for X animation
             mobileNav.classList.toggle('open');
+        });
+
+        // Close mobile menu when a link is clicked
+        document.querySelectorAll('.mobile-nav a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileNav.classList.remove('open');
+                hamburger.classList.remove('open');
+            });
         });
 
         // =========================

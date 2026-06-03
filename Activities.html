@@ -147,21 +147,28 @@
             cursor: pointer;
         }
         
+        /* FIXED: White hamburger lines for visibility on Dark Red header */
         .hamburger span {
             display: block;
             width: 25px;
             height: 2px;
-            background: var(--text-main);
+            background: #ffffff; 
             margin: 5px 0;
             transition: 0.3s;
         }
+
+        /* ADDED: Animation for Hamburger to become 'X' */
+        .hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+        .hamburger.open span:nth-child(2) { opacity: 0; }
+        .hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
 
         .mobile-nav {
             display: none;
             position: fixed;
             top: var(--nav-h);
             left: 0; width: 100%;
-            background: var(--bg-card);
+            /* FIXED: Black background */
+            background: #000000; 
             padding: 20px;
             border-bottom: 1px solid var(--border-light);
             flex-direction: column;
@@ -170,12 +177,25 @@
             box-shadow: 0 10px 20px rgba(0,0,0,0.05);
         }
         .mobile-nav.open { display: flex; }
+        
+        /* FIXED: White text and visible borders */
         .mobile-nav a {
-            color: white;
+            color: #ffffff;
             text-decoration: none;
             padding: 12px;
-            border-bottom: 1px solid var(--border-light);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
             font-size: 1rem;
+            transition: 0.3s;
+        }
+        
+        .mobile-nav a:hover {
+            color: var(--gold);
+            padding-left: 20px;
+        }
+        
+        .mobile-nav a.active {
+            color: var(--gold);
+            font-weight: 700;
         }
 
         /* =========================
@@ -529,10 +549,10 @@
     <div class="mobile-nav" id="mobile-nav">
         <a href="index.html#about">About</a>
         <a href="index.html#Leaderships">Leadership</a>
-        <a href="Activities.html">Activities</a>
+        <a href="Activities.html" class="active">Activities</a>
         <a href="Events.html">Events</a>
-        <li><a href="Gallary.html">Gallery</a></li>
-        <li><a href="Bomas.html">Bomas</a></li>
+        <a href="Gallary.html">Gallery</a>
+        <a href="Bomas.html">Bomas</a>
         <a href="index.html#contact">Contact</a>
     </div>
 
@@ -629,10 +649,7 @@
                     <span class="category-badge">Agriculture</span>
                     <img src="bo15.jpg" onerror="this.src='https://picsum.photos/seed/farm/600/400'" alt="Farming Workshop" class="activity-img">
                 </div>
-                 <div class="activity-image-wrapper">
-                    <span class="category-badge">Agriculture</span>
-                    <img src="bo16.jpg" onerror="this.src='https://picsum.photos/seed/farm/600/400'" alt="Farming Workshop" class="activity-img">
-                </div>
+                <!-- REMOVED DUPLICATE WRAPPER FROM ORIGINAL CODE -->
                 <div class="activity-content">
                     <div class="activity-date">
                         <i class="far fa-calendar-alt"></i> September 20, 2023
@@ -741,7 +758,15 @@
         
         hamburger?.addEventListener('click', () => {
             mobileNav.classList.toggle('open');
-            hamburger.classList.toggle('active'); // You can add specific active class for styling if needed
+            hamburger.classList.toggle('open'); // Changed to 'open' for X animation
+        });
+
+        // Close mobile menu when a link is clicked
+        document.querySelectorAll('.mobile-nav a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileNav.classList.remove('open');
+                hamburger.classList.remove('open');
+            });
         });
 
         // =========================

@@ -35,27 +35,27 @@
         :root {
             /* Palette */
             --gold: #d4af37;
-            --gold-light: #f3e5ab;
+            --gold-light: rgb(122, 118, 118);
             --gold-gradient: linear-gradient(135deg, #b8860b 0%, #d4af37 100%);
             
-            /* CREAM THEME (Default) */
-            --bg-dark: cream; 
-            --bg-card: cream;
-            --bg-glass: cream;
+            /* CREAM THEME (Default) - Fixed invalid 'cream' keyword to hex for stability */
+            --bg-dark: #F9F7F2; 
+            --bg-card: #F9F7F2;
+            --bg-glass: #F9F7F2;
             
-            --text-main: cream;
-            --text-muted:cream;
+            --text-main: #020101;
+            --text-muted: #666666;
 
             /* DARK THEME OVERRIDES (For About & Contact Section) */
-            --dark-bg: white;
-            --dark-card: white;
-            --dark-text: white;
-            --dark-text-muted: #a0a0a0;
+            --dark-bg: #1a1a1a;
+            --dark-card: #252525;
+            --dark-text: dark;
+            --dark-text-muted: rgb(180, 172, 172);
 
             --red-accent: #800000;
             --nav-h: 80px;
-            --border-light: white;
-            --border-gold: white;
+            --border-light: rgba(0, 0, 0, 0.1);
+            --border-gold: rgba(212, 175, 55, 0.3);
         }
 
         html {
@@ -133,7 +133,7 @@
             border-bottom: 1px solid var(--border-light);
             z-index: 1000;
             transition: all 0.3s ease;
-            box-shadow: white;
+            box-shadow: 0 4px 10px white;
         }
 
         .nav-wrapper {
@@ -186,7 +186,7 @@
 
         nav ul li a:hover, nav ul li a.active {
             color: var(--gold);
-            background: white;
+            background: rgba(212, 175, 55, 0.1);
         }
 
         .hamburger {
@@ -200,7 +200,7 @@
             display: block;
             width: 25px;
             height: 2px;
-            background: var(--text-main);
+            background: white; /* Changed to white to be visible on dark red header */
             margin: 5px 0;
             transition: 0.3s;
         }
@@ -214,20 +214,20 @@
             position: fixed;
             top: var(--nav-h);
             left: 0; width: 100%;
-            background: white;
+            background: #000; /* Set to Black so white text is visible */
             padding: 20px;
             border-bottom: 1px solid var(--border-light);
             flex-direction: column;
             gap: 10px;
             z-index: 999;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            box-shadow: 0 10px 20px white;
         }
         .mobile-nav.open { display: flex; animation: fadeIn 0.3s ease; }
         .mobile-nav a {
-            color: white;
+            color: #fff; /* Set to White */
             text-decoration: none;
             padding: 12px;
-            border-bottom: 1px solid var(--border-light);
+            border-bottom: 1px solid rgba(255,255,255,0.1); /* Light border for visibility on black */
             font-size: 1rem;
         }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
